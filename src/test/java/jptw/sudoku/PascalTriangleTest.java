@@ -2,6 +2,7 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -9,12 +10,10 @@ import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 
 ////////////////////////////////////////////////////////// Test class definition
-public class PascalTriangleTest
-{
+public class PascalTriangleTest {
     //////////////////////////////////////////////////////////////////// [Tests]
     @Test
-    public void computeZero()
-    {
+    public void computeZero() {
         PascalTriangle pascalTriangle = new PascalTriangle();
         int n = 0;
         int expectedLength = 0;
@@ -26,11 +25,10 @@ public class PascalTriangleTest
     }
 
     @Test
-    public void computeOne()
-    {
+    public void computeOne() {
         PascalTriangle pascalTriangle = new PascalTriangle();
         int n = 1;
-        int[][] expectedResult = new int[][] { { 1 } };
+        int[][] expectedResult = new int[][]{{1}};
 
         pascalTriangle.compute(n);
         int[][] actualResult = pascalTriangle.getTriangle();
@@ -39,17 +37,16 @@ public class PascalTriangleTest
     }
 
     @Test
-    public void computeFour()
-    {
+    public void computeFour() {
         PascalTriangle pascalTriangle = new PascalTriangle();
         int n = 4;
         int[][] expectedResult = new int[][]
-                                 {
-                                     { 1 },
-                                     { 1, 1 },
-                                     { 1, 2, 1 },
-                                     { 1, 3, 3, 1 }
-                                 };
+                {
+                        {1},
+                        {1, 1},
+                        {1, 2, 1},
+                        {1, 3, 3, 1}
+                };
 
         pascalTriangle.compute(n);
         int[][] actualResult = pascalTriangle.getTriangle();
@@ -61,11 +58,10 @@ public class PascalTriangleTest
     public final ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void computeMinus3()
-    {
+    public void computeMinus3() {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Input must be a non-negative"
-                                        + " number.");
+                + " number.");
 
         PascalTriangle pascalTriangle = new PascalTriangle();
         int n = -3;

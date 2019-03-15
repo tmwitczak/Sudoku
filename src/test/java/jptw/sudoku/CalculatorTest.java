@@ -2,6 +2,7 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -9,13 +10,11 @@ import org.junit.rules.ExpectedException;
 import static org.junit.Assert.assertEquals;
 
 ////////////////////////////////////////////////////////// Test class definition
-public class CalculatorTest
-{
+public class CalculatorTest {
     //////////////////////////////////////////////////////////////////// [Tests]
     //----------------------------------------------------- Main functionality <
     @Test
-    public void addInt()
-    {
+    public void addInt() {
         Calculator calculator = new Calculator();
         int a = 10, b = 5;
         int expectedResult = 15;
@@ -26,8 +25,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void addDouble()
-    {
+    public void addDouble() {
         Calculator calculator = new Calculator();
         double a = 10.0, b = 5.0;
         double expectedResult = 15.0;
@@ -38,8 +36,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void diffInt()
-    {
+    public void diffInt() {
         Calculator calculator = new Calculator();
         int a = 10, b = 5;
         int expectedResult = 5;
@@ -50,8 +47,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void diffDouble()
-    {
+    public void diffDouble() {
         Calculator calculator = new Calculator();
         double a = 10.0, b = 5.0;
         double expectedResult = 5.0;
@@ -62,8 +58,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void mulInt()
-    {
+    public void mulInt() {
         Calculator calculator = new Calculator();
         int a = 10, b = 5;
         int expectedResult = 50;
@@ -74,8 +69,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void mulDouble()
-    {
+    public void mulDouble() {
         Calculator calculator = new Calculator();
         double a = 10.0, b = 5.0;
         double expectedResult = 50.0;
@@ -86,8 +80,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void divInt()
-    {
+    public void divInt() {
         Calculator calculator = new Calculator();
         int a = 10, b = 5;
         int expectedResult = 2;
@@ -98,8 +91,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void divDouble()
-    {
+    public void divDouble() {
         Calculator calculator = new Calculator();
         double a = 10.0, b = 5.0;
         double expectedResult = 2.0;
@@ -111,8 +103,7 @@ public class CalculatorTest
 
     //--------------------------------------------------------------- Overflow <
     @Test
-    public void addIntPositiveOverflow()
-    {
+    public void addIntPositiveOverflow() {
         Calculator calculator = new Calculator();
         int a = Integer.MAX_VALUE, b = 1;
         int expectedResult = Integer.MIN_VALUE;
@@ -123,8 +114,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void addIntNegativeOverflow()
-    {
+    public void addIntNegativeOverflow() {
         Calculator calculator = new Calculator();
         int a = Integer.MIN_VALUE, b = -1;
         int expectedResult = Integer.MAX_VALUE;
@@ -135,8 +125,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void addDoublePositiveOverflow()
-    {
+    public void addDoublePositiveOverflow() {
         Calculator calculator = new Calculator();
         double a = Double.MAX_VALUE, b = a;
         double expectedResult = Double.POSITIVE_INFINITY;
@@ -147,8 +136,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void addDoubleNegativeOverflow()
-    {
+    public void addDoubleNegativeOverflow() {
         Calculator calculator = new Calculator();
         double a = -Double.MAX_VALUE, b = a;
         double expectedResult = Double.NEGATIVE_INFINITY;
@@ -159,8 +147,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void diffIntPositiveOverflow()
-    {
+    public void diffIntPositiveOverflow() {
         Calculator calculator = new Calculator();
         int a = Integer.MAX_VALUE, b = -1;
         int expectedResult = Integer.MIN_VALUE;
@@ -171,8 +158,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void diffIntNegativeOverflow()
-    {
+    public void diffIntNegativeOverflow() {
         Calculator calculator = new Calculator();
         int a = Integer.MIN_VALUE, b = 1;
         int expectedResult = Integer.MAX_VALUE;
@@ -183,8 +169,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void diffDoublePositiveOverflow()
-    {
+    public void diffDoublePositiveOverflow() {
         Calculator calculator = new Calculator();
         double a = Double.MAX_VALUE, b = -a;
         double expectedResult = Double.POSITIVE_INFINITY;
@@ -195,8 +180,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void diffDoubleNegativeOverflow()
-    {
+    public void diffDoubleNegativeOverflow() {
         Calculator calculator = new Calculator();
         double a = -Double.MAX_VALUE, b = -a;
         double expectedResult = Double.NEGATIVE_INFINITY;
@@ -207,8 +191,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void mulIntPositiveOverflow()
-    {
+    public void mulIntPositiveOverflow() {
         Calculator calculator = new Calculator();
         int a = Integer.MAX_VALUE, b = 2;
         int expectedResult = -2;
@@ -219,8 +202,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void mulIntNegativeOverflow()
-    {
+    public void mulIntNegativeOverflow() {
         Calculator calculator = new Calculator();
         int a = Integer.MIN_VALUE, b = 2;
         int expectedResult = 0;
@@ -231,8 +213,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void mulDoublePositiveOverflow()
-    {
+    public void mulDoublePositiveOverflow() {
         Calculator calculator = new Calculator();
         double a = Double.MAX_VALUE, b = a;
         double expectedResult = Double.POSITIVE_INFINITY;
@@ -243,8 +224,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void mulDoubleNegativeOverflow()
-    {
+    public void mulDoubleNegativeOverflow() {
         Calculator calculator = new Calculator();
         double a = Double.MAX_VALUE, b = -a;
         double expectedResult = Double.NEGATIVE_INFINITY;
@@ -256,8 +236,7 @@ public class CalculatorTest
 
     //-------------------------------------------------------------- Underflow <
     @Test
-    public void divDoublePositiveUnderflow()
-    {
+    public void divDoublePositiveUnderflow() {
         Calculator calculator = new Calculator();
         double a = Double.MIN_VALUE, b = 2.0;
         double expectedResult = 0.0;
@@ -268,8 +247,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void divDoubleNegativeUnderflow()
-    {
+    public void divDoubleNegativeUnderflow() {
         Calculator calculator = new Calculator();
         double a = -Double.MIN_VALUE, b = 2.0;
         double expectedResult = 0.0;
@@ -284,8 +262,7 @@ public class CalculatorTest
     public final ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void divIntNonZeroByZero()
-    {
+    public void divIntNonZeroByZero() {
         expectedException.expect(ArithmeticException.class);
         expectedException.expectMessage("/ by zero");
 
@@ -296,8 +273,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void divDoubleNonZeroByZero()
-    {
+    public void divDoubleNonZeroByZero() {
         Calculator calculator = new Calculator();
         double a = 10.0, b = 0.0;
         double expectedResult = Double.POSITIVE_INFINITY;
@@ -309,8 +285,7 @@ public class CalculatorTest
 
     //-------------------------------------------------- Dividing zero by zero <
     @Test
-    public void divIntZeroByZero()
-    {
+    public void divIntZeroByZero() {
         expectedException.expect(ArithmeticException.class);
         expectedException.expectMessage("/ by zero");
 
@@ -321,8 +296,7 @@ public class CalculatorTest
     }
 
     @Test
-    public void divDoubleZeroByZero()
-    {
+    public void divDoubleZeroByZero() {
         Calculator calculator = new Calculator();
         double a = 0.0, b = 0.0;
         double expectedResult = Double.NaN;
