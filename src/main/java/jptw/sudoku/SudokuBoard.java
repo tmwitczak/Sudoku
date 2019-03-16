@@ -1,36 +1,29 @@
 //////////////////////////////////////////////////////////////////////// Package
 package jptw.sudoku;
 
+//////////////////////////////////////////////////////////////////////// Imports
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Random;
 
 /////////////////////////////////////////////////////////////// Class definition
-public class SudokuBoard {
+class SudokuBoard {
     ////////////////////////////////////////////////////////////////// [Methods]
-    //------------------------------------------------------------ Constructor <
-    SudokuBoard() {
-        board = new int[BOARD_SIZE][BOARD_SIZE];
-    }
-
     //----------------------------------------------------- Main functionality <
     void fillBoard() {
-        boolean isBoardValid;
         do {
             cleanBoard();
-            isBoardValid = true;
 
             fillBoardElements:
             for (int i = 0; i < BOARD_SIZE; i++) {
                 for (int j = 0; j < BOARD_SIZE; j++) {
                     if (!fillBoardElement(i, j)) {
-                        isBoardValid = false;
                         break fillBoardElements;
                     }
                 }
             }
         }
-        while (!isBoardValid);
+        while (!sudokuBoardValidator.isBoardValid(board));
     }
 
     //------------------------------------------------------ Helper functions <<
@@ -49,7 +42,7 @@ public class SudokuBoard {
                 board[i][j] = generateRandomSudokuNumber();
             } while (wrongNumbers.contains(board[i][j]));
 
-            if (isElementValid(i, j)) {
+            if (sudokuBoardValidator.isElementValid(board, i, j)) {
                 return true;
             } else {
                 wrongNumbers.add(board[i][j]);
@@ -59,7 +52,7 @@ public class SudokuBoard {
                 return false;
             }
 
-        } while (!isElementValid(i, j));
+        } while (!sudokuBoardValidator.isElementValid(board, i, j));
         return true;
     }
 
@@ -67,26 +60,97 @@ public class SudokuBoard {
         return random.nextInt(BOARD_SIZE) + 1;
     }
 
-    private boolean isElementValid(int i, int j) {
-        return isRowValid(i) && isColumnValid(j) && isBoxValid(i, j);
+    //---------------------------------------------------------------- Getters <
+    int[][] getBoard() {
+        int[][] clonedBoard = new int[board.length][];
+        for (int i = 0; i < board.length; i++) {
+            clonedBoard[i] = board[i].clone();
+        }
+        return clonedBoard;
     }
 
-    private boolean isRowValid(int n) {
-        int[] row = getRow(n);
+    /////////////////////////////////////////////////////////////////// [Fields]
+    private int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
+    private static final int BOARD_SIZE = 9;
+    private static final Random random = new Random();
+    private static final SudokuBoardValidator sudokuBoardValidator
+            = new SudokuBoardValidator();
+}
+
+//////////////////////////////////////////////////////// Helper class definition
+class SudokuBoardValidator {
+    ////////////////////////////////////////////////////////////////// [Methods]
+    //----------------------------------------------------- Main functionality <
+    boolean isBoardValid(final int[][] board) {
+        // Check rows and columns
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            if (!isRowValid(board, i) || !isColumnValid(board, i)) {
+                return false;
+            }
+        }
+
+        // Check boxes
+        for (int i = 0; i < BOX_SIZE; i++) {
+            if (!isBoxValid(board, BOX_SIZE * i, BOX_SIZE * i)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    boolean isElementValid(final int[][] board, int i, int j) {
+        return isRowValid(board, i)
+                && isColumnValid(board, j)
+                && isBoxValid(board, i, j);
+    }
+
+    private boolean isRowValid(final int[][] board, int n) {
+        int[] row = getRow(board, n);
         int[] rowWithoutZeros = removeZerosFromArray(row);
         return !checkForDuplicatesInArray(rowWithoutZeros);
     }
 
-    private boolean isColumnValid(int n) {
-        int[] column = getColumn(n);
+    private boolean isColumnValid(final int[][] board, int n) {
+        int[] column = getColumn(board, n);
         int[] columnWithoutZeros = removeZerosFromArray(column);
         return !checkForDuplicatesInArray(columnWithoutZeros);
     }
 
-    private boolean isBoxValid(int i, int j) {
-        int[] box = getBox(getBoxCoordinates(i, j)[0], getBoxCoordinates(i, j)[1]);
+    private boolean isBoxValid(final int[][] board, int i, int j) {
+        int[] box = getBox(board, getBoxCoordinates(i, j)[0],
+                getBoxCoordinates(i, j)[1]);
         int[] boxWithoutZeros = removeZerosFromArray(box);
         return !checkForDuplicatesInArray(boxWithoutZeros);
+    }
+
+    //------------------------------------------------------ Helper functions <<
+    private int[] getRow(final int[][] board, int n) {
+        return board[n];
+    }
+
+    private int[] getColumn(final int[][] board, int n) {
+        int[] column = new int[BOARD_SIZE];
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            column[i] = board[i][n];
+        }
+        return column;
+    }
+
+    private int[] getBox(final int[][] board, int i, int j) {
+        int[] box = new int[BOX_SIZE * BOX_SIZE];
+        int[] boxCoordinates = getBoxCoordinates(i, j);
+        for (int k = 0; k < BOX_SIZE; k++) {
+            for (int l = 0; l < BOX_SIZE; l++) {
+                box[BOX_SIZE * k + l]
+                        = board[boxCoordinates[0] + k][boxCoordinates[1] + l];
+            }
+        }
+        return box;
+    }
+
+    private int[] getBoxCoordinates(int i, int j) {
+        return new int[]{(i / BOX_SIZE) * BOX_SIZE, (j / BOX_SIZE) * BOX_SIZE};
     }
 
     private int[] removeZerosFromArray(final int[] array) {
@@ -127,44 +191,8 @@ public class SudokuBoard {
         return false;
     }
 
-    private int[] getRow(int n) {
-        return board[n];
-    }
-
-    private int[] getColumn(int n) {
-        int[] column = new int[BOARD_SIZE];
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            column[i] = board[i][n];
-        }
-        return column;
-    }
-
-    private int[] getBox(int i, int j) {
-        int[] box = new int[BOX_SIZE * BOX_SIZE];
-        int[] boxCoordinates = getBoxCoordinates(i, j);
-        for (int k = 0; k < BOX_SIZE; k++) {
-            for (int l = 0; l < BOX_SIZE; l++) {
-                box[BOX_SIZE * k + l]
-                        = board[boxCoordinates[0] + k][boxCoordinates[1] + l];
-            }
-        }
-        return box;
-    }
-
-    private int[] getBoxCoordinates(int i, int j) {
-        return new int[]{(i / BOX_SIZE) * BOX_SIZE, (j / BOX_SIZE) * BOX_SIZE};
-    }
-
-
-    //---------------------------------------------------------------- Getters <
-    int[][] getBoard() {
-        return board.clone();
-    }
-
     /////////////////////////////////////////////////////////////////// [Fields]
-    private int[][] board;
     private static final int BOARD_SIZE = 9;
     private static final int BOX_SIZE = 3;
-    private static final Random random = new Random();
 }
 ////////////////////////////////////////////////////////////////////////////////
