@@ -4,7 +4,10 @@ package jptw.sudoku;
 //////////////////////////////////////////////////////////////////////// Imports
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 ////////////////////////////////////////////////////////// Test class definition
 public class SudokuBoardTest {
@@ -23,6 +26,19 @@ public class SudokuBoardTest {
     }
 
     @Test
+    public void checkTwoConsecutiveBoards() {
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        int[][][] boards = new int[2][][];
+
+        for (int i = 0; i < boards.length; i++) {
+            sudokuBoard.fillBoard();
+            boards[i] = sudokuBoard.getBoard();
+        }
+
+        assertThat(boards[0], not(equalTo(boards[1])));
+    }
+
+    @Test
     public void getBoard() {
         SudokuBoard sudokuBoard = new SudokuBoard();
         int expectedResult = 0;
@@ -33,16 +49,6 @@ public class SudokuBoardTest {
         assertEquals(expectedResult, actualResult);
     }
 
-    ////////////////////////////////////////////////////////////////// [Methods]
-    //------------------------------------------------------- Helper functions <
-    /*private boolean isBoardValid(final int[][] board) {
-        for (int i = 0; i < board.length; i++) {
-            if (!isRowValid(board, i)) {
-                return false;
-            }
-            for (int j = 0; j < )
-        }
-        return true;
-    }*/
 }
+
 ////////////////////////////////////////////////////////////////////////////////

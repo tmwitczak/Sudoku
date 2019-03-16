@@ -11,6 +11,7 @@ class SudokuBoard {
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------- Main functionality <
     void fillBoard() {
+        previousBoard = getBoard();
         do {
             cleanBoard();
 
@@ -23,7 +24,8 @@ class SudokuBoard {
                 }
             }
         }
-        while (!sudokuBoardValidator.isBoardValid(board));
+        while (!sudokuBoardValidator.isBoardValid(board)
+                || isBoardEqualToPrevious());
     }
 
     //------------------------------------------------------ Helper functions <<
@@ -60,6 +62,17 @@ class SudokuBoard {
         return random.nextInt(BOARD_SIZE) + 1;
     }
 
+    private boolean isBoardEqualToPrevious() {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (board[i][j] != previousBoard[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     //---------------------------------------------------------------- Getters <
     int[][] getBoard() {
         int[][] clonedBoard = new int[board.length][];
@@ -71,6 +84,7 @@ class SudokuBoard {
 
     /////////////////////////////////////////////////////////////////// [Fields]
     private int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
+    private int[][] previousBoard = new int[BOARD_SIZE][BOARD_SIZE];
     private static final int BOARD_SIZE = 9;
     private static final Random random = new Random();
     private static final SudokuBoardValidator sudokuBoardValidator
@@ -195,4 +209,5 @@ class SudokuBoardValidator {
     private static final int BOARD_SIZE = 9;
     private static final int BOX_SIZE = 3;
 }
+
 ////////////////////////////////////////////////////////////////////////////////
