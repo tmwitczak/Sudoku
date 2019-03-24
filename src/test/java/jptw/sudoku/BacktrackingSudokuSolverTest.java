@@ -2,93 +2,75 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
-import java.util.Arrays;
+import org.junit.Test;
+
 import java.util.BitSet;
 
-/////////////////////////////////////////////////////////////// Class definition
-public class SudokuBoard {
-    ////////////////////////////////////////////////////////////////// [Methods]
-    //----------------------------------------------------------- Constructors <
-    SudokuBoard() {
-        this.board = new int[BOARD_SIZE][BOARD_SIZE];
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = EMPTY_CELL;
+////////////////////////////////////////////////////////// Test class definition
+public class BacktrackingSudokuSolverTest {
+    //////////////////////////////////////////////////////////////////// [Tests]
+    @Test
+    public void solve() {
+        SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        SudokuBoardValidator sudokuBoardValidator = new SudokuBoardValidator();
+
+        sudokuSolver.solve(sudokuBoard);
+        boolean boardStatus
+                = sudokuBoardValidator.isBoardValid(sudokuBoard);
+
+        assertThat(boardStatus, is(true));
+    }
+
+    @Test
+    public void solvePartialBoard() {
+        SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        SudokuBoardValidator sudokuBoardValidator = new SudokuBoardValidator();
+
+        int[][] board = new int[][]{
+                {1, 2, 3, 4, 5, 6, 7, 8, 9},
+                {4, 5, 6, 7, 8, 9, 1, 0, 3},
+                {7, 8, 9, 1, 2, 3, 4, 0, 6},
+                {2, 1, 0, 3, 6, 5, 8, 9, 7},
+                {3, 6, 5, 8, 9, 7, 2, 0, 4},
+                {8, 9, 0, 2, 1, 0, 3, 6, 5},
+                {5, 0, 1, 6, 4, 2, 9, 7, 8},
+                {6, 4, 0, 9, 7, 8, 5, 0, 1},
+                {9, 7, 8, 5, 0, 1, 6, 4, 2}
+        };
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, board[i][j]);
             }
         }
+
+        sudokuSolver.solve(sudokuBoard);
+        boolean boardStatus
+                = sudokuBoardValidator.isBoardValid(sudokuBoard);
+
+        assertThat(boardStatus, is(true));
     }
 
-    SudokuBoard(final SudokuBoard board) {
-        this.board = new int[BOARD_SIZE][BOARD_SIZE];
+    @Test
+    public void checkTwoConsecutiveBoards() {
+        SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
+        final int NUMBER_OF_BOARDS = 2;
+        SudokuBoard[] sudokuBoards = new SudokuBoard[NUMBER_OF_BOARDS];
 
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = board.board[i][j];
-            }
+        for (int i = 0; i < NUMBER_OF_BOARDS; i++) {
+            sudokuBoards[i] = new SudokuBoard();
+            sudokuSolver.solve(sudokuBoards[i]);
         }
+
+        assertThat(sudokuBoards[0].equals(sudokuBoards[1]), is(false));
     }
 
-    //----------------------------------------------------- Main functionality <
-    //------------------------------------------------------------- Accessors <<
-    public int get(int x, int y) {
-        if (x < 0 || x >= 9) {
-            throw new IllegalArgumentException(Integer.toString(x));
-        }
-        if (y < 0 || y >= 9) {
-            throw new IllegalArgumentException(Integer.toString(y));
-        }
-
-        return board[x][y];
-    }
-
-    public boolean set(int x, int y, int value) {
-        if (value < 0 || value > 9) {
-            throw new IllegalArgumentException(Integer.toString(value));
-        }
-
-        int oldValue = get(x, y);
-        board[x][y] = value;
-
-        if (!checkBoard()) {
-            board[x][y] = oldValue;
-            return false;
-        }
-
-        return true;
-    }
-
-    //------------------------------------------------------ Board validation <<
-    private boolean checkBoard() {
-        return sudokuBoardValidator.isBoardValid(this);
-    }
-
-    //------------------------------------------------------------- Comparison <
-    @Override
-    public boolean equals(final Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (object == null || object.getClass() != getClass()) {
-            return false;
-        }
-        SudokuBoard board = (SudokuBoard) object;
-        return Arrays.deepEquals(board.board, this.board);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.deepHashCode(board);
-    }
-
-    /////////////////////////////////////////////////////////////////// [Fields]
-    private int[][] board;
-    private static final int BOARD_SIZE = 9;
-    private static final int EMPTY_CELL = 0;
-    private final SudokuBoardValidator sudokuBoardValidator
-            = new SudokuBoardValidator();
-
-    /////////////////////////////////////////////////////////// [Helper classes]
+    ////////////////////////////////////////////////// [Helper class definition]
     class SudokuBoardValidator {
         ////////////////////////////////////////////////////////////// [Methods]
         //------------------------------------------------- Main functionality <
@@ -111,12 +93,6 @@ public class SudokuBoard {
 
             return true;
         }
-
-    /*boolean isElementValid(final SudokuBoard board, int i, int j) {
-        return isRowValid(board, i)
-                && isColumnValid(board, j)
-                && isBoxValid(board, i, j);
-    }*/
 
         private boolean isRowValid(final SudokuBoard board, int n) {
             int[] row = getRow(board, n);
@@ -216,6 +192,7 @@ public class SudokuBoard {
         private static final int BOARD_SIZE = 9;
         private static final int BOX_SIZE = 3;
     }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
