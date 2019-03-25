@@ -2,8 +2,10 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+import javafx.util.Pair;
+
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 
 /////////////////////////////////////////////////////////////// Class definition
 class BacktrackingSudokuSolver
@@ -11,86 +13,67 @@ class BacktrackingSudokuSolver
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------- Main functionality <
     @Override
-    public void solve(final SudokuBoard board) {
-        SudokuBoard boardCopy = new SudokuBoard(board);
-        copy(board, previousBoard);
-        do {
-            if (!fill(board)) {
-                copy(boardCopy, board);
+    public boolean solve(final SudokuBoard board) {
+
+        Pair<Integer, Integer> emptyFieldCoordinates
+                = findEmptyField(board);
+
+        if (emptyFieldCoordinates == null) {
+            if (board.equals(previousBoard)) {
+                return false;
             }
+            previousBoard = new SudokuBoard(board);
+            return true;
         }
-        while (!isBoardFilled(board) || board.equals(previousBoard));
-    }
 
-    //------------------------------------------------------ Helper functions <<
-    private void clean(final SudokuBoard board) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                board.set(i, j, 0);
-            }
-        }
-    }
+        int i = emptyFieldCoordinates.getKey();
+        int j = emptyFieldCoordinates.getValue();
 
-    private void copy(final SudokuBoard source, final SudokuBoard destination) {
-        clean(destination);
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                destination.set(i, j, source.get(i, j));
-            }
-        }
-    }
+        ArrayList<Integer> randomSudokuNumbers = generateRandomSudokuNumbers();
 
-    private boolean isBoardFilled(final SudokuBoard board) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (board.get(i, j) == 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean fill(final SudokuBoard board) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (board.get(i, j) == 0) {
-                    if (!fillElement(board, i, j)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean fillElement(final SudokuBoard board, int i, int j) {
-        ArrayList<Integer> wrongNumbers = new ArrayList<>();
-        do {
-            int randomSudokuNumber;
-
-            do {
-                randomSudokuNumber = generateRandomSudokuNumber();
-            } while (wrongNumbers.contains(randomSudokuNumber));
-
+        for (int randomSudokuNumber : randomSudokuNumbers) {
             if (board.set(i, j, randomSudokuNumber)) {
-                return true;
-            } else {
-                wrongNumbers.add(randomSudokuNumber);
+                if (solve(board)) {
+                    return true;
+                }
             }
+        }
 
-        } while (wrongNumbers.size() < BOARD_SIZE);
+        board.set(i, j, 0);
+
         return false;
     }
 
-    private int generateRandomSudokuNumber() {
-        return random.nextInt(BOARD_SIZE) + 1;
+    //------------------------------------------------------ Helper functions <<
+    private Pair<Integer, Integer> findEmptyField(final SudokuBoard board) {
+
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (board.get(i, j) == 0) {
+                    return new Pair<>(i, j);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private ArrayList<Integer> generateRandomSudokuNumbers() {
+
+        ArrayList<Integer> randomSudokuNumbers = new ArrayList<>();
+
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            randomSudokuNumbers.add(i + 1);
+        }
+
+        Collections.shuffle(randomSudokuNumbers);
+
+        return randomSudokuNumbers;
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]
-    private static final SudokuBoard previousBoard = new SudokuBoard();
     private static final int BOARD_SIZE = 9;
-    private static final Random random = new Random();
+    private static SudokuBoard previousBoard = new SudokuBoard();
 
 }
 

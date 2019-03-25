@@ -5,7 +5,7 @@ package jptw.sudoku;
 public interface SudokuSolver {
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------- Main functionality <
-    void solve(SudokuBoard board);
+    boolean solve(SudokuBoard board);
 
 }
 

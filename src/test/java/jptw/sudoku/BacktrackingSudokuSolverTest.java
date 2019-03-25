@@ -96,21 +96,18 @@ public class BacktrackingSudokuSolverTest {
 
         private boolean isRowValid(final SudokuBoard board, int n) {
             int[] row = getRow(board, n);
-            int[] rowWithoutZeros = removeZerosFromArray(row);
-            return !checkForDuplicatesInArray(rowWithoutZeros);
+            return !checkForDuplicatesInArray(row);
         }
 
         private boolean isColumnValid(final SudokuBoard board, int n) {
             int[] column = getColumn(board, n);
-            int[] columnWithoutZeros = removeZerosFromArray(column);
-            return !checkForDuplicatesInArray(columnWithoutZeros);
+            return !checkForDuplicatesInArray(column);
         }
 
         private boolean isBoxValid(final SudokuBoard board, int i, int j) {
             int[] box = getBox(board, getBoxCoordinates(i, j)[0],
                     getBoxCoordinates(i, j)[1]);
-            int[] boxWithoutZeros = removeZerosFromArray(box);
-            return !checkForDuplicatesInArray(boxWithoutZeros);
+            return !checkForDuplicatesInArray(box);
         }
 
         //-------------------------------------------------- Helper functions <<
@@ -148,31 +145,6 @@ public class BacktrackingSudokuSolverTest {
                     (i / BOX_SIZE) * BOX_SIZE,
                     (j / BOX_SIZE) * BOX_SIZE
             };
-        }
-
-        private int[] removeZerosFromArray(final int[] array) {
-            int zeroCount = countZerosInArray(array);
-            int[] arrayWithoutZeros = new int[array.length - zeroCount];
-
-            int i = 0;
-            for (int element : array) {
-                if (element != 0) {
-                    arrayWithoutZeros[i] = element;
-                    i++;
-                }
-            }
-
-            return arrayWithoutZeros;
-        }
-
-        private int countZerosInArray(final int[] array) {
-            int count = 0;
-            for (int element : array) {
-                if (element == 0) {
-                    count++;
-                }
-            }
-            return count;
         }
 
         private boolean checkForDuplicatesInArray(final int[] array) {
