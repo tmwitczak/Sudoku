@@ -57,6 +57,21 @@ public class BacktrackingSudokuSolverTest {
     }
 
     @Test
+    public void checkTwoIdenticalConsecutiveBoards() {
+        SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        SudokuBoardValidator sudokuBoardValidator = new SudokuBoardValidator();
+        sudokuSolver.solve(sudokuBoard);
+        sudokuBoard.set(0, 0, 0);
+
+        sudokuSolver.solve(sudokuBoard);
+        boolean boardStatus
+                = sudokuBoardValidator.isBoardValid(sudokuBoard);
+
+        assertThat(boardStatus, is(false));
+    }
+
+    @Test
     public void checkTwoConsecutiveBoards() {
         SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
         final int NUMBER_OF_BOARDS = 2;
@@ -75,6 +90,11 @@ public class BacktrackingSudokuSolverTest {
         ////////////////////////////////////////////////////////////// [Methods]
         //------------------------------------------------- Main functionality <
         boolean isBoardValid(final SudokuBoard board) {
+            // Check for zeros
+            if (!isBoardFilled(board)) {
+                return false;
+            }
+
             // Check rows and columns
             for (int i = 0; i < BOARD_SIZE; i++) {
                 if (!isRowValid(board, i) || !isColumnValid(board, i)) {
@@ -91,6 +111,17 @@ public class BacktrackingSudokuSolverTest {
                 }
             }
 
+            return true;
+        }
+
+        private boolean isBoardFilled(final SudokuBoard board) {
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                for (int j = 0; j < BOARD_SIZE; j++) {
+                    if (board.get(i, j) == 0) {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 
