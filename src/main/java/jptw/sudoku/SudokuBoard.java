@@ -10,21 +10,21 @@ public class SudokuBoard {
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------------- Constructors <
     SudokuBoard() {
-        this.board = new int[BOARD_SIZE][BOARD_SIZE];
+        this.board = new SudokuField[BOARD_SIZE][BOARD_SIZE];
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = EMPTY_CELL;
+                this.board[i][j] = new SudokuField();
             }
         }
     }
 
     SudokuBoard(final SudokuBoard board) {
-        this.board = new int[BOARD_SIZE][BOARD_SIZE];
+        this.board = new SudokuField[BOARD_SIZE][BOARD_SIZE];
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = board.board[i][j];
+                this.board[i][j] = new SudokuField(board.get(i, j));
             }
         }
     }
@@ -39,7 +39,7 @@ public class SudokuBoard {
             throw new IllegalArgumentException(Integer.toString(y));
         }
 
-        return board[x][y];
+        return board[x][y].getFieldValue();
     }
 
     public boolean set(int x, int y, int value) {
@@ -48,10 +48,10 @@ public class SudokuBoard {
         }
 
         int oldValue = get(x, y);
-        board[x][y] = value;
+        board[x][y].setFieldValue(value);
 
         if (!checkBoard()) {
-            board[x][y] = oldValue;
+            board[x][y].setFieldValue(oldValue);
             return false;
         }
 
@@ -82,7 +82,7 @@ public class SudokuBoard {
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]
-    private int[][] board;
+    private SudokuField[][] board;
     private static final int BOARD_SIZE = 9;
     private static final int EMPTY_CELL = 0;
     private final SudokuBoardValidator sudokuBoardValidator
