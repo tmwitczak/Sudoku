@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThat;
 
 ////////////////////////////////////////////////////////// Test class definition
 public class SudokuBoardTest {
+
     //////////////////////////////////////////////////////////////////// [Tests]
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();

@@ -11,9 +11,11 @@ import static org.junit.Assert.assertThat;
 
 ////////////////////////////////////////////////////////// Test class definition
 public class BacktrackingSudokuSolverTest {
+
     //////////////////////////////////////////////////////////////////// [Tests]
     @Test
     public void solve() {
+
         SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
         SudokuBoard sudokuBoard = new SudokuBoard();
         SudokuBoardValidator sudokuBoardValidator = new SudokuBoardValidator();
@@ -27,6 +29,7 @@ public class BacktrackingSudokuSolverTest {
 
     @Test
     public void solvePartialBoard() {
+
         SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
         SudokuBoard sudokuBoard = new SudokuBoard();
         SudokuBoardValidator sudokuBoardValidator = new SudokuBoardValidator();
@@ -58,6 +61,7 @@ public class BacktrackingSudokuSolverTest {
 
     @Test
     public void checkTwoIdenticalConsecutiveBoards() {
+
         SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
         SudokuBoard sudokuBoard = new SudokuBoard();
         SudokuBoardValidator sudokuBoardValidator = new SudokuBoardValidator();
@@ -73,6 +77,7 @@ public class BacktrackingSudokuSolverTest {
 
     @Test
     public void checkTwoConsecutiveBoards() {
+
         SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
         final int NUMBER_OF_BOARDS = 2;
         SudokuBoard[] sudokuBoards = new SudokuBoard[NUMBER_OF_BOARDS];
@@ -87,9 +92,11 @@ public class BacktrackingSudokuSolverTest {
 
     ////////////////////////////////////////////////// [Helper class definition]
     class SudokuBoardValidator {
+
         ////////////////////////////////////////////////////////////// [Methods]
         //------------------------------------------------- Main functionality <
         boolean isBoardValid(final SudokuBoard board) {
+
             // Check for zeros
             if (!isBoardFilled(board)) {
                 return false;
@@ -115,6 +122,7 @@ public class BacktrackingSudokuSolverTest {
         }
 
         private boolean isBoardFilled(final SudokuBoard board) {
+
             for (int i = 0; i < BOARD_SIZE; i++) {
                 for (int j = 0; j < BOARD_SIZE; j++) {
                     if (board.get(i, j) == 0) {
@@ -122,45 +130,60 @@ public class BacktrackingSudokuSolverTest {
                     }
                 }
             }
+
             return true;
         }
 
         private boolean isRowValid(final SudokuBoard board, int n) {
+
             int[] row = getRow(board, n);
+
             return !checkForDuplicatesInArray(row);
         }
 
         private boolean isColumnValid(final SudokuBoard board, int n) {
+
             int[] column = getColumn(board, n);
+
             return !checkForDuplicatesInArray(column);
         }
 
         private boolean isBoxValid(final SudokuBoard board, int i, int j) {
+
             int[] box = getBox(board, getBoxCoordinates(i, j)[0],
                     getBoxCoordinates(i, j)[1]);
+
             return !checkForDuplicatesInArray(box);
         }
 
         //-------------------------------------------------- Helper functions <<
         private int[] getRow(final SudokuBoard board, int n) {
+
             int[] row = new int[BOARD_SIZE];
+
             for (int i = 0; i < BOARD_SIZE; i++) {
                 row[i] = board.get(n, i);
             }
+
             return row;
         }
 
         private int[] getColumn(final SudokuBoard board, int n) {
+
             int[] column = new int[BOARD_SIZE];
+
             for (int i = 0; i < BOARD_SIZE; i++) {
                 column[i] = board.get(i, n);
             }
+
             return column;
         }
 
         private int[] getBox(final SudokuBoard board, int i, int j) {
+
             int[] box = new int[BOX_SIZE * BOX_SIZE];
             int[] boxCoordinates = getBoxCoordinates(i, j);
+
             for (int k = 0; k < BOX_SIZE; k++) {
                 for (int l = 0; l < BOX_SIZE; l++) {
                     box[BOX_SIZE * k + l]
@@ -168,10 +191,12 @@ public class BacktrackingSudokuSolverTest {
                             boxCoordinates[1] + l);
                 }
             }
+
             return box;
         }
 
         private int[] getBoxCoordinates(int i, int j) {
+
             return new int[]{
                     (i / BOX_SIZE) * BOX_SIZE,
                     (j / BOX_SIZE) * BOX_SIZE
@@ -179,8 +204,10 @@ public class BacktrackingSudokuSolverTest {
         }
 
         private boolean checkForDuplicatesInArray(final int[] array) {
+
             BitSet bitSet = new BitSet(array.length);
             bitSet.set(0, array.length, false);
+
             for (int i : array) {
                 if (!bitSet.get(i)) {
                     bitSet.set(i, true);
@@ -188,12 +215,14 @@ public class BacktrackingSudokuSolverTest {
                     return true;
                 }
             }
+
             return false;
         }
 
         /////////////////////////////////////////////////////////////// [Fields]
         private static final int BOARD_SIZE = 9;
         private static final int BOX_SIZE = 3;
+
     }
 
 }
