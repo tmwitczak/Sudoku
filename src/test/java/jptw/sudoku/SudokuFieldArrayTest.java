@@ -6,6 +6,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -20,13 +23,16 @@ public class SudokuFieldArrayTest {
     public void verifyCorrect() {
 
         // Given
-        final int NUMBER_OF_FIELDS = 9;
-        SudokuField[] sudokuFields = new SudokuField[NUMBER_OF_FIELDS];
-
-        int[] sudokuFieldsInteger = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        for (int i = 0; i < sudokuFields.length; i++) {
-            sudokuFields[i] = new SudokuField(sudokuFieldsInteger[i]);
-        }
+        List<SudokuField> sudokuFields = Arrays.asList(
+                new SudokuField(1),
+                new SudokuField(2),
+                new SudokuField(3),
+                new SudokuField(4),
+                new SudokuField(5),
+                new SudokuField(6),
+                new SudokuField(7),
+                new SudokuField(8),
+                new SudokuField(9));
 
         // When
         SudokuFieldArray sudokuFieldArray = new SudokuFieldArray(sudokuFields);
@@ -41,12 +47,16 @@ public class SudokuFieldArrayTest {
 
         // Given
         final int NUMBER_OF_FIELDS = 9;
-        SudokuField[] sudokuFields = new SudokuField[NUMBER_OF_FIELDS];
-
-        int[] sudokuFieldsInteger = new int[]{1, 2, 1, 4, 5, 6, 7, 8, 9};
-        for (int i = 0; i < sudokuFields.length; i++) {
-            sudokuFields[i] = new SudokuField(sudokuFieldsInteger[i]);
-        }
+        List<SudokuField> sudokuFields = Arrays.asList(
+                new SudokuField(1),
+                new SudokuField(2),
+                new SudokuField(3),
+                new SudokuField(3),
+                new SudokuField(5),
+                new SudokuField(6),
+                new SudokuField(7),
+                new SudokuField(9),
+                new SudokuField(9));
 
         // When
         SudokuFieldArray sudokuFieldArray = new SudokuFieldArray(sudokuFields);
@@ -60,13 +70,13 @@ public class SudokuFieldArrayTest {
     public void constructIncorrectNumberOfFields() {
 
         // Given
-        final int NUMBER_OF_FIELDS = 7;
-        SudokuField[] sudokuFields = new SudokuField[NUMBER_OF_FIELDS];
-
-        int[] sudokuFieldsInteger = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        for (int i = 0; i < sudokuFields.length; i++) {
-            sudokuFields[i] = new SudokuField(sudokuFieldsInteger[i]);
-        }
+        List<SudokuField> sudokuFields =(Arrays.asList(
+                new SudokuField(2),
+                new SudokuField(3),
+                new SudokuField(4),
+                new SudokuField(5),
+                new SudokuField(6),
+                new SudokuField(7)));
 
         // Then
         expectedException.expect(IllegalArgumentException.class);

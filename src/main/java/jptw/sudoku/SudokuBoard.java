@@ -2,31 +2,44 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /////////////////////////////////////////////////////////////// Class definition
 public class SudokuBoard {
 
-    ////////////////////////////////////////////////////////////////// [Methods]
-    //----------------------------------------------------------- Constructors <
-    SudokuBoard() {
+    private List<List<SudokuField>> board;
+    private static final int BOARD_SIZE = 9;
+    private static final int BOX_SIZE = 3;
 
-        this.board = new SudokuField[BOARD_SIZE][BOARD_SIZE];
+    public SudokuBoard() {
+
+        this.board = (List) Arrays.asList(new List[BOARD_SIZE]);
+
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            this.board.set(i, Arrays.asList(new SudokuField[BOARD_SIZE]));
+        }
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = new SudokuField();
+                this.board.get(i).set(j, new SudokuField());
             }
         }
     }
 
-    SudokuBoard(final SudokuBoard board) {
+    public SudokuBoard(final SudokuBoard board) {
 
-        this.board = new SudokuField[BOARD_SIZE][BOARD_SIZE];
+        this.board = (List) Arrays.asList(new List[BOARD_SIZE]);
+
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            this.board.set(i, Arrays.asList(new SudokuField[BOARD_SIZE]));
+        }
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = new SudokuField(board.get(i, j));
+                this.board.get(i).set(j, new SudokuField(board.board.get(i).get(j).getFieldValue()));
             }
         }
     }
@@ -42,15 +55,15 @@ public class SudokuBoard {
             throw new IllegalArgumentException(Integer.toString(y));
         }
 
-        return board[x][y].getFieldValue();
+        return board.get(x).get(y).getFieldValue();
     }
 
     public SudokuRow getRow(final int x) {
 
-        SudokuField[] row = new SudokuField[BOARD_SIZE];
+        List<SudokuField> row = Arrays.asList(new SudokuField[BOARD_SIZE]);
 
-        for (int i = 0; i < row.length; i++) {
-            row[i] = board[x][i];
+        for (int i = 0; i < row.size(); i++) {
+            row.set(i,new SudokuField(board.get(x).get(i).getFieldValue()));
         }
 
         return new SudokuRow(row);
@@ -58,10 +71,11 @@ public class SudokuBoard {
 
     public SudokuColumn getColumn(final int y) {
 
-        SudokuField[] column = new SudokuField[BOARD_SIZE];
+        List<SudokuField> column = Arrays.asList(new SudokuField[BOARD_SIZE]);
 
-        for (int i = 0; i < column.length; i++) {
-            column[i] = board[i][y];
+        for (int i = 0; i < column.size(); i++) {
+            column.set(i,new SudokuField(board.get(i).get(y).getFieldValue()));
+
         }
 
         return new SudokuColumn(column);
@@ -69,13 +83,12 @@ public class SudokuBoard {
 
     public SudokuBox getBox(final int x, final int y) {
 
-        SudokuField[] box = new SudokuField[BOX_SIZE * BOX_SIZE];
+        List<SudokuField> box = Arrays.asList(new SudokuField[BOX_SIZE * BOX_SIZE]);
         int[] boxCoordinates = getBoxCoordinates(x, y);
 
         for (int i = 0; i < BOX_SIZE; i++) {
             for (int j = 0; j < BOX_SIZE; j++) {
-                box[BOX_SIZE * i + j]
-                        = board[boxCoordinates[0] + i][boxCoordinates[1] + j];
+                box.set(BOX_SIZE * i + j,new SudokuField(board.get(boxCoordinates[0] + i).get(boxCoordinates[1] + j).getFieldValue()));
             }
         }
 
@@ -89,10 +102,10 @@ public class SudokuBoard {
         }
 
         int oldValue = get(x, y);
-        board[x][y].setFieldValue(value);
+        board.get(x).set(y,new SudokuField(value));
 
         if (!checkBoard()) {
-            board[x][y].setFieldValue(oldValue);
+            board.get(x).set(y,new SudokuField(oldValue));
             return false;
         }
 
@@ -135,18 +148,31 @@ public class SudokuBoard {
 
         SudokuBoard board = (SudokuBoard) object;
 
-        return Arrays.deepEquals(board.board, this.board);
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (board.board.get(i).get(j).getFieldValue() != this.board.get(i).get(j).getFieldValue()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 
     @Override
     public int hashCode() {
-
-        return Arrays.deepHashCode(board);
+        int code=0;
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                code+=Objects.hash(board.get(i).get(j).getFieldValue());
+            }
+        }
+        return code;
     }
 
     //------------------------------------------------------- Helper functions <
     private int[] getBoxCoordinates(int x, int y) {
-        
+
         return new int[]{
                 (x / BOX_SIZE) * BOX_SIZE,
                 (y / BOX_SIZE) * BOX_SIZE
@@ -154,9 +180,7 @@ public class SudokuBoard {
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]
-    private SudokuField[][] board;
-    private static final int BOARD_SIZE = 9;
-    private static final int BOX_SIZE = 3;
+
 
 }
 

@@ -2,23 +2,31 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.Collections;
 
 /////////////////////////////////////////////////////////////// Class definition
 class SudokuFieldArray {
 
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------------- Constructors <
-    SudokuFieldArray(final SudokuField[] fields) {
+    SudokuFieldArray(final List<SudokuField> fields) {
 
-        if (fields.length != NUMBER_OF_FIELDS) {
+        if (fields.size() != NUMBER_OF_FIELDS) {
             throw new IllegalArgumentException(
                     "fields should contain 9 elements!");
         }
 
-        sudokuFields = Arrays.copyOf(fields, fields.length);
+        this.sudokuFields = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
+
+        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
+            this.sudokuFields.set(i,fields.get(i));
+        }
+
     }
 
     //----------------------------------------------------------- Verification <
@@ -29,26 +37,26 @@ class SudokuFieldArray {
 
     //------------------------------------------------------- Helper functions <
     private boolean checkForDuplicatesWhileIgnoringZeros(
-            final SudokuField[] fields) {
+            final List<SudokuField> fields) {
 
-        Set<SudokuField> fieldsSet = new HashSet<>();
-
-        for (SudokuField field : fields) {
-            if (field.getFieldValue() != 0) {
-                if (fieldsSet.contains(field)) {
-                    return true;
+        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
+            if (fields.get(i).getFieldValue() != 0) {
+                for (int j = i + 1; j < NUMBER_OF_FIELDS; j++) {
+                    if (fields.get(j).getFieldValue() != 0) {
+                        if (fields.get(i).getFieldValue() == fields.get(j).getFieldValue())
+                            return true;
+                    }
                 }
-                fieldsSet.add(field);
             }
         }
-
         return false;
     }
 
+
     /////////////////////////////////////////////////////////////////// [Fields]
-    private SudokuField[] sudokuFields;
+    private List<SudokuField> sudokuFields;
     private static final int NUMBER_OF_FIELDS = 9;
-    
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

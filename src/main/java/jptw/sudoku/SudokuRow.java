@@ -1,12 +1,14 @@
 //////////////////////////////////////////////////////////////////////// Package
 package jptw.sudoku;
 
+import java.util.List;
+
 /////////////////////////////////////////////////////////////// Class definition
 class SudokuRow
         extends SudokuFieldArray {
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------------- Constructors <
-    SudokuRow(final SudokuField[] fields) {
+    SudokuRow(final List<SudokuField> fields) {
         super(fields);
     }
 
