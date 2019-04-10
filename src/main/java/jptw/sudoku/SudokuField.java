@@ -47,6 +47,11 @@ class SudokuField {
         return Objects.hash(value);
     }
 
+    @Override
+    public String toString(){
+        return Objects.toString(value);
+    }
+
     /////////////////////////////////////////////////////////////////// [Fields]
     private int value;
 }

@@ -4,10 +4,7 @@ package jptw.sudoku;
 //////////////////////////////////////////////////////////////////////// Imports
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.Collections;
 
 /////////////////////////////////////////////////////////////// Class definition
 class SudokuFieldArray {
@@ -24,7 +21,7 @@ class SudokuFieldArray {
         this.sudokuFields = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
 
         for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
-            this.sudokuFields.set(i,fields.get(i));
+            this.sudokuFields.set(i, fields.get(i));
         }
 
     }
@@ -43,15 +40,47 @@ class SudokuFieldArray {
             if (fields.get(i).getFieldValue() != 0) {
                 for (int j = i + 1; j < NUMBER_OF_FIELDS; j++) {
                     if (fields.get(j).getFieldValue() != 0) {
-                        if (fields.get(i).getFieldValue() == fields.get(j).getFieldValue())
+                        if (fields.get(i).getFieldValue() == fields.get(j).getFieldValue()) {
                             return true;
+                        }
                     }
                 }
             }
         }
         return false;
     }
+    //------------------------------------------------------------- Comparison <
+    @Override
+    public boolean equals(final Object object) {
 
+        if (object == this) {
+            return true;
+        }
+
+        if (object == null || object.getClass() != getClass()) {
+            return false;
+        }
+
+        SudokuFieldArray fields = (SudokuFieldArray) object;
+
+        return this.sudokuFields.equals(fields);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return sudokuFields.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        StringBuilder sb = new StringBuilder(s);
+        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
+                sb.append(sudokuFields.get(i).toString());
+        }
+        return sb.toString();
+    }
 
     /////////////////////////////////////////////////////////////////// [Fields]
     private List<SudokuField> sudokuFields;
