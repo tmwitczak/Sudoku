@@ -2,6 +2,7 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -42,7 +43,7 @@ class SudokuField {
             return false;
         }
         SudokuField field = (SudokuField) object;
-        return new EqualsBuilder().append(this.value,field.value).isEquals();
+        return new EqualsBuilder().append(this.value, field.value).isEquals();
     }
 
     @Override
@@ -52,7 +53,7 @@ class SudokuField {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("value",this.value).toString();
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("value", this.value).toString();
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]

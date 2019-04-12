@@ -152,18 +152,18 @@ public class SudokuBoard {
 
         SudokuBoard board = (SudokuBoard) object;
 
-        return new EqualsBuilder().append(this.board,board.board).isEquals();
+        return new EqualsBuilder().append(this.board, board.board).isEquals();
     }
 
     @Override
     public int hashCode() {
 
-        return new HashCodeBuilder(11,17).append(this.board).toHashCode();
+        return new HashCodeBuilder(11, 17).append(this.board).toHashCode();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("Board",this.board).toString();
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("Board", this.board).toString();
     }
 
     //------------------------------------------------------- Helper functions <

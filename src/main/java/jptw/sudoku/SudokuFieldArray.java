@@ -31,6 +31,16 @@ class SudokuFieldArray {
 
     }
 
+    SudokuFieldArray(final SudokuFieldArray object) {
+
+        this.sudokuFields = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
+
+        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
+            this.sudokuFields.set(i, object.sudokuFields.get(i));
+        }
+
+    }
+
     //----------------------------------------------------------- Verification <
     boolean verify() {
 
