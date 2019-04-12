@@ -19,17 +19,6 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
-    <dependencies>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
     <reporting>
         <plugins>
             <plugin>
@@ -173,4 +162,21 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+    </dependencies>
 </project>

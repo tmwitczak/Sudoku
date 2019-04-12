@@ -6,6 +6,10 @@ package jptw.sudoku;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /////////////////////////////////////////////////////////////// Class definition
 class SudokuFieldArray {
 
@@ -49,6 +53,7 @@ class SudokuFieldArray {
         }
         return false;
     }
+
     //------------------------------------------------------------- Comparison <
     @Override
     public boolean equals(final Object object) {
@@ -62,24 +67,17 @@ class SudokuFieldArray {
         }
 
         SudokuFieldArray fields = (SudokuFieldArray) object;
-
-        return this.sudokuFields.equals(fields);
+        return new EqualsBuilder().append(this.sudokuFields, fields.sudokuFields).isEquals();
     }
 
     @Override
     public int hashCode() {
-
-        return sudokuFields.hashCode();
+        return new HashCodeBuilder(11, 17).append(this.sudokuFields).toHashCode();
     }
 
     @Override
     public String toString() {
-        String s = "";
-        StringBuilder sb = new StringBuilder(s);
-        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
-                sb.append(sudokuFields.get(i).toString());
-        }
-        return sb.toString();
+        return new ToStringBuilder(this).append("Array of fields:", this.sudokuFields).toString();
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]

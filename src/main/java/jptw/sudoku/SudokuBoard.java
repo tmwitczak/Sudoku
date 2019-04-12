@@ -3,10 +3,12 @@ package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
 
-import javax.print.DocFlavor;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /////////////////////////////////////////////////////////////// Class definition
 public class SudokuBoard {
@@ -149,27 +151,18 @@ public class SudokuBoard {
 
         SudokuBoard board = (SudokuBoard) object;
 
-        return this.board.equals(board.board);
+        return new EqualsBuilder().append(this.board,board.board).isEquals();
     }
 
     @Override
     public int hashCode() {
 
-        return board.hashCode();
+        return new HashCodeBuilder(11,17).append(this.board).toHashCode();
     }
 
     @Override
     public String toString() {
-        String s = "";
-        StringBuilder sb = new StringBuilder(s);
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                sb.append(board.get(i).get(j).toString());
-                sb.append(" ");
-            }
-            sb.append("\n");
-        }
-        return sb.toString();
+        return new ToStringBuilder(this).append("Board:",this.board).toString();
     }
 
     //------------------------------------------------------- Helper functions <

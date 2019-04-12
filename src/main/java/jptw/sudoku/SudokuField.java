@@ -2,7 +2,9 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
-import java.util.Objects;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /////////////////////////////////////////////////////////////// Class definition
 class SudokuField {
@@ -39,17 +41,17 @@ class SudokuField {
             return false;
         }
         SudokuField field = (SudokuField) object;
-        return field.value == this.value;
+        return new EqualsBuilder().append(this.value,field.value).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return new HashCodeBuilder(11, 17).append(this.value).toHashCode();
     }
 
     @Override
-    public String toString(){
-        return Objects.toString(value);
+    public String toString() {
+        return new ToStringBuilder(this).append("value:",this.value).toString();
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]
