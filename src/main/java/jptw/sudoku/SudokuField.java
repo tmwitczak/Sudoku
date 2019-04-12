@@ -5,6 +5,7 @@ package jptw.sudoku;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /////////////////////////////////////////////////////////////// Class definition
 class SudokuField {
@@ -51,7 +52,7 @@ class SudokuField {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("value:",this.value).toString();
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("value",this.value).toString();
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]

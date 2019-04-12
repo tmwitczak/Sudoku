@@ -116,6 +116,12 @@ public class SudokuFieldTest {
         assertEquals(a.hashCode(), b.hashCode());
     }
 
+    @Test
+    public void toStringMethod(){
+        sudokuField = new SudokuField(5);
+        assertNotNull(sudokuField.toString());
+        assertEquals(sudokuField.toString(),"5");
+    }
     /////////////////////////////////////////////////////////////////// [Fields]
     private SudokuField sudokuField;
 

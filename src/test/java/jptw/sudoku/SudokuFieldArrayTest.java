@@ -11,6 +11,8 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 ////////////////////////////////////////////////////////// Test class definition
 public class SudokuFieldArrayTest {
@@ -87,6 +89,22 @@ public class SudokuFieldArrayTest {
         new SudokuFieldArray(sudokuFields);
     }
 
+    @Test
+    public void toStringMethod()
+    {
+        List<SudokuField> sudokuFields = Arrays.asList(
+                new SudokuField(1),
+                new SudokuField(2),
+                new SudokuField(3),
+                new SudokuField(4),
+                new SudokuField(5),
+                new SudokuField(6),
+                new SudokuField(7),
+                new SudokuField(8),
+                new SudokuField(9));
+        assertNotNull(sudokuFields.toString());
+        assertEquals(sudokuFields.toString(),"[1, 2, 3, 4, 5, 6, 7, 8, 9]");
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

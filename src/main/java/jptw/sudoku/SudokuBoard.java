@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /////////////////////////////////////////////////////////////// Class definition
 public class SudokuBoard {
@@ -162,7 +163,7 @@ public class SudokuBoard {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("Board:",this.board).toString();
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("Board",this.board).toString();
     }
 
     //------------------------------------------------------- Helper functions <

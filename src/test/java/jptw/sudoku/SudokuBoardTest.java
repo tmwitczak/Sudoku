@@ -2,6 +2,7 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 ////////////////////////////////////////////////////////// Test class definition
@@ -150,6 +152,33 @@ public class SudokuBoardTest {
     @Test
     public void equalsNull() {
         assertThat(sudokuBoard.equals(null), is(false));
+    }
+
+    @Test
+    public void toStringMethod() {
+        int[][] board = new int[][]{
+                {1, 2, 3, 4, 5, 6, 7, 8, 9},
+                {4, 5, 6, 7, 8, 9, 1, 2, 3},
+                {7, 8, 9, 1, 2, 3, 4, 5, 6},
+                {2, 1, 4, 3, 6, 5, 8, 9, 7},
+                {3, 6, 5, 8, 9, 7, 2, 1, 4},
+                {8, 9, 7, 2, 1, 4, 3, 6, 5},
+                {5, 3, 1, 6, 4, 2, 9, 7, 8},
+                {6, 4, 2, 9, 7, 8, 5, 3, 1},
+                {9, 7, 8, 5, 3, 1, 6, 4, 2}
+        };
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, board[i][j]);
+            }
+        }
+        assertNotNull(sudokuBoard.toString());
+        assertEquals(sudokuBoard.toString(), "[[1, 2, 3, 4, 5, 6, 7, 8, 9], [4, 5, 6, 7, 8, 9, 1, 2, 3], " +
+                "[7, 8, 9, 1, 2, 3, 4, 5, 6], [2, 1, 4, 3, 6, 5, 8, 9, 7], [3, 6, 5, 8, 9, 7, 2, 1, 4]," +
+                " [8, 9, 7, 2, 1, 4, 3, 6, 5], [5, 3, 1, 6, 4, 2, 9, 7, 8], [6, 4, 2, 9, 7, 8, 5, 3, 1]," +
+                " [9, 7, 8, 5, 3, 1, 6, 4, 2]]");
+
     }
 
 
