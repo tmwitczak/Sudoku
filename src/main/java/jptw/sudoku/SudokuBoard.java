@@ -3,6 +3,7 @@ package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /////////////////////////////////////////////////////////////// Class definition
-public class SudokuBoard {
+public class SudokuBoard implements Serializable {
 
     private List<List<SudokuField>> board;
     private static final int BOARD_SIZE = 9;

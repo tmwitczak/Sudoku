@@ -8,8 +8,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serializable;
+
 /////////////////////////////////////////////////////////////// Class definition
-class SudokuField {
+class SudokuField implements Serializable {
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------------- Constructors <
     public SudokuField() {

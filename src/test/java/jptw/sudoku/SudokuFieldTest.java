@@ -117,11 +117,12 @@ public class SudokuFieldTest {
     }
 
     @Test
-    public void toStringMethod(){
+    public void toStringMethod() {
         sudokuField = new SudokuField(5);
         assertNotNull(sudokuField.toString());
-        assertEquals(sudokuField.toString(),"5");
+        assertEquals(sudokuField.toString(), "5");
     }
+
     /////////////////////////////////////////////////////////////////// [Fields]
     private SudokuField sudokuField;
 
