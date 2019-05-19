@@ -126,6 +126,14 @@ public class SudokuFieldArrayTest {
         assertEquals(A.toString(), "[1, 2, 3, 4, 5, 6, 7, 8, 9]");
     }
 
+    @Test
+    public void cloneTest(){
+        SudokuFieldArray A = new SudokuFieldArray(sudokuFieldsA);
+        Object B = A.clone();
+        Assert.assertThat(A.equals(B) && B.equals(A), is(true));
+        assertEquals(A.hashCode(), B.hashCode());
+    }
+
 
 }
 

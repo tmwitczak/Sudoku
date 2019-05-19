@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /////////////////////////////////////////////////////////////// Class definition
-public class SudokuBoard implements Serializable {
+public class SudokuBoard implements Serializable, Cloneable {
 
     private List<List<SudokuField>> board;
     private static final int BOARD_SIZE = 9;
@@ -176,7 +176,10 @@ public class SudokuBoard implements Serializable {
         };
     }
 
-    /////////////////////////////////////////////////////////////////// [Fields]
+    @Override
+    protected Object clone(){
+        return new SudokuBoard(this);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

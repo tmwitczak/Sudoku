@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.io.Serializable;
 
 /////////////////////////////////////////////////////////////// Class definition
-class SudokuField implements Serializable {
+class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------------- Constructors <
     public SudokuField() {
@@ -56,6 +56,23 @@ class SudokuField implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("value", this.value).toString();
+    }
+
+    @Override
+    public int compareTo(SudokuField o) {
+
+        if (this.getFieldValue() == o.getFieldValue()) {
+            return 0;
+        } else if (this.getFieldValue() > o.getFieldValue()) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    @Override
+    protected Object clone(){
+        return new SudokuField(value);
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]

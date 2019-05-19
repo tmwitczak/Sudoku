@@ -3,6 +3,7 @@ package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -181,6 +182,29 @@ public class SudokuBoardTest {
 
     }
 
+    @Test
+    public void cloneTest(){
+        int[][] board = new int[][]{
+                {1, 2, 3, 4, 5, 6, 7, 8, 9},
+                {4, 5, 6, 7, 8, 9, 1, 2, 3},
+                {7, 8, 9, 1, 2, 3, 4, 5, 6},
+                {2, 1, 4, 3, 6, 5, 8, 9, 7},
+                {3, 6, 5, 8, 9, 7, 2, 1, 4},
+                {8, 9, 7, 2, 1, 4, 3, 6, 5},
+                {5, 3, 1, 6, 4, 2, 9, 7, 8},
+                {6, 4, 2, 9, 7, 8, 5, 3, 1},
+                {9, 7, 8, 5, 3, 1, 6, 4, 2}
+        };
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                sudokuBoard.set(i, j, board[i][j]);
+            }
+        }
+        Object sudokuBoard2 = sudokuBoard.clone();
+        Assert.assertThat(sudokuBoard.equals(sudokuBoard2) && sudokuBoard2.equals(sudokuBoard), is(true));
+        assertEquals(sudokuBoard.hashCode(), sudokuBoard2.hashCode());
+    }
 
     /////////////////////////////////////////////////////////////////// [Fields]
     private SudokuBoard sudokuBoard;

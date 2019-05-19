@@ -2,6 +2,7 @@
 package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -120,7 +121,26 @@ public class SudokuFieldTest {
     public void toStringMethod() {
         sudokuField = new SudokuField(5);
         assertNotNull(sudokuField.toString());
-        assertEquals(sudokuField.toString(), "5");
+        assertEquals("5", sudokuField.toString());
+    }
+
+    @Test
+    public void compare() {
+        SudokuField field1 = new SudokuField(3);
+        SudokuField field2 = new SudokuField(7);
+        SudokuField field3 = new SudokuField(7);
+        assertEquals(-1, field1.compareTo(field2));
+        assertEquals(1, field2.compareTo(field1));
+        assertEquals(0, field2.compareTo(field3));
+
+    }
+
+    @Test
+    public void cloneTest() {
+        SudokuField field1 = new SudokuField(3);
+        Object field2 = field1.clone();
+        assertThat(field1.equals(field2)&&field2.equals(field1),is(true));
+        assertEquals(field1.hashCode(),field2.hashCode());
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]

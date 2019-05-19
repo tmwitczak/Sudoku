@@ -3,6 +3,7 @@ package jptw.sudoku;
 
 //////////////////////////////////////////////////////////////////////// Imports
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /////////////////////////////////////////////////////////////// Class definition
-class SudokuFieldArray {
+class SudokuFieldArray implements Serializable, Cloneable{
 
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------------- Constructors <
@@ -89,6 +90,11 @@ class SudokuFieldArray {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("Fields", this.sudokuFields).toString();
+    }
+
+    @Override
+    protected Object clone(){
+        return new SudokuFieldArray(sudokuFields);
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]
