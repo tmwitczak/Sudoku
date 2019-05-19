@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /////////////////////////////////////////////////////////////// Class definition
-class BacktrackingSudokuSolver
+public class BacktrackingSudokuSolver
         implements SudokuSolver {
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------- Main functionality <

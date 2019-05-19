@@ -16,10 +16,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class SudokuBoard implements Serializable, Cloneable {
 
     private List<List<SudokuField>> board;
-    private static final int BOARD_SIZE = 9;
-    private static final int BOX_SIZE = 3;
+    public static final int BOARD_SIZE = 9;
+    public static final int BOX_SIZE = 3;
 
-    SudokuBoard() {
+    public SudokuBoard() {
 
         this.board = (List) Arrays.asList(new List[BOARD_SIZE]);
 
@@ -34,7 +34,7 @@ public class SudokuBoard implements Serializable, Cloneable {
         }
     }
 
-    SudokuBoard(final SudokuBoard board) {
+    public SudokuBoard(final SudokuBoard board) {
 
         this.board = (List) Arrays.asList(new List[BOARD_SIZE]);
 
@@ -50,7 +50,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     //-------------------------------------------------------------- Accessors <
-    int get(int x, int y) {
+    public int get(int x, int y) {
 
         if (x < 0 || x >= 9) {
             throw new IllegalArgumentException(Integer.toString(x));
@@ -177,7 +177,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     }
 
     @Override
-    protected Object clone(){
+    public Object clone(){
         return new SudokuBoard(this);
     }
 }
