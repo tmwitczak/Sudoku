@@ -139,8 +139,8 @@ public class SudokuFieldTest {
     public void cloneTest() {
         SudokuField field1 = new SudokuField(3);
         Object field2 = field1.clone();
-        assertThat(field1.equals(field2)&&field2.equals(field1),is(true));
-        assertEquals(field1.hashCode(),field2.hashCode());
+        assertThat(field1.equals(field2) && field2.equals(field1), is(true));
+        assertEquals(field1.hashCode(), field2.hashCode());
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]

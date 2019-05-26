@@ -183,7 +183,7 @@ public class SudokuBoardTest {
     }
 
     @Test
-    public void cloneTest(){
+    public void cloneTest() {
         int[][] board = new int[][]{
                 {1, 2, 3, 4, 5, 6, 7, 8, 9},
                 {4, 5, 6, 7, 8, 9, 1, 2, 3},

@@ -127,7 +127,7 @@ public class SudokuFieldArrayTest {
     }
 
     @Test
-    public void cloneTest(){
+    public void cloneTest() {
         SudokuFieldArray A = new SudokuFieldArray(sudokuFieldsA);
         Object B = A.clone();
         Assert.assertThat(A.equals(B) && B.equals(A), is(true));

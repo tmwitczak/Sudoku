@@ -25,7 +25,7 @@ public class Difficulty {
         }
     }
 
-    public SudokuBoard modifySudokuBoard(SudokuBoard sudokuBoard, String level) {
+    public SudokuBoard modifySudokuBoard(final SudokuBoard sudokuBoard, final String level) {
 
         switch (level) {
             case "Easy": {

@@ -7,12 +7,12 @@ import java.io.IOException;
 
 public class Start extends Application {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(final Stage stage) throws IOException {
         StageSetup.buildStage(stage, "Menu.fxml", "Sudoku");
     }
 

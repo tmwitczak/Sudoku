@@ -17,21 +17,21 @@ public class StageSetup {
         return stage;
     }
 
-    private static void setStage(Stage stage) {
+    private static void setStage(final Stage stage) {
         StageSetup.stage = stage;
     }
 
-    private static Parent loadFxml(String fxml) throws IOException {
+    private static Parent loadFxml(final String fxml) throws IOException {
         return new FXMLLoader(StageSetup.class.getResource(fxml)).load();
     }
 
-    public static void buildStage(String filePath) throws IOException {
+    public static void buildStage(final String filePath) throws IOException {
         stage.setScene(new Scene(loadFxml(filePath)));
         stage.sizeToScene();
         stage.show();
     }
 
-    public static void buildStage(Stage stage, String filePath, String title) throws IOException {
+    public static void buildStage(final Stage stage, final String filePath, final String title) throws IOException {
         setStage(stage);
         stage.setScene(new Scene(loadFxml(filePath)));
         stage.setTitle(title);

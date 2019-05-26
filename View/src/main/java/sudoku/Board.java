@@ -22,6 +22,7 @@ public class Board {
         difficultyLevel.modifySudokuBoard(sudokuBoard, Menu.getLevel());
         fill();
     }
+
     private void fill() {
         for (int i = 0; i < SudokuBoard.BOARD_SIZE; i++) {
             for (int j = 0; j < SudokuBoard.BOARD_SIZE; j++) {
@@ -30,7 +31,7 @@ public class Board {
                 textField.setFont(Font.font(20));
                 if (sudokuBoard.get(i, j) != 0) {
                     textField.setDisable(true);
-                    textField.setText(String.valueOf(sudokuBoard.get(i,j)));
+                    textField.setText(String.valueOf(sudokuBoard.get(i, j)));
                 }
                 grid.add(textField, j, i);
             }

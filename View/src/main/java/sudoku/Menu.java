@@ -22,12 +22,12 @@ public class Menu {
     }
 
     @FXML
-    private void onActionStartButton(ActionEvent actionEvent) throws IOException {
+    private void onActionStartButton(final ActionEvent actionEvent) throws IOException {
         StageSetup.buildStage("Board.fxml");
     }
 
     @FXML
-    private void onActionAcceptLevel(ActionEvent actionEvent) {
+    private void onActionAcceptLevel(final ActionEvent actionEvent) {
         Menu.level = chooseLevel
                 .getSelectionModel().getSelectedItem().toString();
 

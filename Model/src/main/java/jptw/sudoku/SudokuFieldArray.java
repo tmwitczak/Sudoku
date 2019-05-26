@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /////////////////////////////////////////////////////////////// Class definition
-class SudokuFieldArray implements Serializable, Cloneable{
+class SudokuFieldArray implements Serializable, Cloneable {
 
     ////////////////////////////////////////////////////////////////// [Methods]
     //----------------------------------------------------------- Constructors <
@@ -93,7 +93,7 @@ class SudokuFieldArray implements Serializable, Cloneable{
     }
 
     @Override
-    protected Object clone(){
+    protected Object clone() {
         return new SudokuFieldArray(sudokuFields);
     }
 

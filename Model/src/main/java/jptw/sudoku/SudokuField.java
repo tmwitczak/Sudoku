@@ -59,7 +59,7 @@ class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
     }
 
     @Override
-    public int compareTo(SudokuField o) {
+    public int compareTo(final SudokuField o) {
 
         if (this.getFieldValue() == o.getFieldValue()) {
             return 0;
@@ -71,7 +71,7 @@ class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
     }
 
     @Override
-    protected Object clone(){
+    protected Object clone() {
         return new SudokuField(value);
     }
 
