@@ -1,21 +1,21 @@
+////////////////////////////////////////////////////////////////////// | Package
 package sudoku;
 
+
+////////////////////////////////////////////////////////////////////// | Imports
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+
 import jptw.sudoku.BacktrackingSudokuSolver;
 import jptw.sudoku.SudokuBoard;
 
+
+///////////////////////////////////////////////////////////////// | Class: Board
 public class Board {
 
-    @FXML
-    private GridPane grid;
-
-    private SudokuBoard sudokuBoard = new SudokuBoard();
-    private BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
-    private Difficulty difficultyLevel = new Difficulty();
-
+    //============================================================ | Behaviour <
     @FXML
     private void initialize() {
         solver.solve(sudokuBoard);
@@ -37,4 +37,16 @@ public class Board {
             }
         }
     }
+
+    //================================================================= | Data <
+    @FXML
+    private GridPane grid;
+
+    private SudokuBoard sudokuBoard = new SudokuBoard();
+    private BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
+    private Difficulty difficultyLevel = new Difficulty();
+
+
 }
+
+////////////////////////////////////////////////////////////////////////////////

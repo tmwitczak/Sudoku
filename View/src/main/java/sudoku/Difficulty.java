@@ -1,19 +1,21 @@
+////////////////////////////////////////////////////////////////////// | Package
 package sudoku;
 
-import jptw.sudoku.SudokuBoard;
 
+////////////////////////////////////////////////////////////////////// | Imports
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import jptw.sudoku.SudokuBoard;
+
+
+//////////////////////////////////////////////////////////// | Class: Difficulty
 public class Difficulty {
 
-    private static final int[] missingSpots = {5, 9, 13};
-
-    private Random rand = new Random();
-    private Set<Field> position = new HashSet<>();
-
+    //============================================================ | Behaviour <
     private void fillRandomPositionsList(int spots) {
+
         for (int i = 0; i < spots; i++) {
             boolean flag = false;
 
@@ -25,7 +27,8 @@ public class Difficulty {
         }
     }
 
-    public SudokuBoard modifySudokuBoard(final SudokuBoard sudokuBoard, final String level) {
+    public SudokuBoard modifySudokuBoard(final SudokuBoard sudokuBoard,
+                                         final String level) {
 
         switch (level) {
             case "Easy": {
@@ -50,4 +53,15 @@ public class Difficulty {
         }
         return sudokuBoard;
     }
+
+    //================================================================= | Data <
+    private static final int[] missingSpots = {5, 9, 13};
+
+    private Random rand = new Random();
+    private Set<Field> position = new HashSet<>();
+
+
 }
+
+
+////////////////////////////////////////////////////////////////////////////////

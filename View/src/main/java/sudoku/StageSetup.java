@@ -1,18 +1,20 @@
+////////////////////////////////////////////////////////////////////// | Package
 package sudoku;
 
-import java.io.IOException;
 
+////////////////////////////////////////////////////////////////////// | Imports
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
+
+//////////////////////////////////////////////////////////// | Class: StageSetup
 public class StageSetup {
 
-    /*------------------------ FIELDS REGION ------------------------*/
-    private static Stage stage;
-
-    /*------------------------ METHODS REGION ------------------------*/
+    //============================================================ | Behaviour <
     public static Stage getStage() {
         return stage;
     }
@@ -25,17 +27,29 @@ public class StageSetup {
         return new FXMLLoader(StageSetup.class.getResource(fxml)).load();
     }
 
-    public static void buildStage(final String filePath) throws IOException {
+    static void buildStage(final String filePath)
+            throws IOException {
         stage.setScene(new Scene(loadFxml(filePath)));
         stage.sizeToScene();
         stage.show();
     }
 
-    public static void buildStage(final Stage stage, final String filePath, final String title) throws IOException {
+    static void buildStage(final Stage stage,
+                           final String filePath,
+                           final String title)
+            throws IOException {
         setStage(stage);
         stage.setScene(new Scene(loadFxml(filePath)));
         stage.setTitle(title);
         stage.sizeToScene();
         stage.show();
     }
+
+
+    //================================================================= | Data <
+    private static Stage stage;
+
+
 }
+
+////////////////////////////////////////////////////////////////////////////////
