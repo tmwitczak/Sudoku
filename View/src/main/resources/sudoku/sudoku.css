@@ -7,7 +7,7 @@
     color-5: #c3073f;*/
 
     -fx-background-color: #1a1a1d;
-    -fx-font: 46px "System";
+    -fx-font: 40px "Montserrat Light";
 
 }
 
@@ -22,7 +22,16 @@
     -fx-text-fill: #ffffff;
     -fx-background-color: #6f2223;
 }
+/* .sudoku-field {
+    -fx-effect: dropshadow(three-pass-box, #4e4e50, 10, 0, 0, 0);
+} */
 .text-field {
+    -fx-alignment: center;
+    -fx-padding: 0px;
     -fx-text-fill: #ffffff;
     -fx-background-color: #6f2223;
+}
+.text-field:disabled, .text-field:disabled > * {
+    -fx-opacity: 1.0;
+    -fx-background-color: #950740;
 }

@@ -10,13 +10,13 @@ import java.util.Set;
 import jptw.sudoku.SudokuBoard;
 
 
-//////////////////////////////////////////////////////////// | Class: Difficulty
-public class Difficulty {
+//////////////////////////////////////////////////////////// | Class: DifficultyLevel
+public class DifficultyLevel {
 
     //============================================================ | Behaviour <
-    private void fillRandomPositionsList(int spots) {
+    private void fillRandomPositionsList(final int numberOfSpots) {
 
-        for (int i = 0; i < spots; i++) {
+        for (int i = 0; i < numberOfSpots; i++) {
             boolean flag = false;
             while (!flag) {
                 int x = randomNumberGenerator.nextInt(9);
