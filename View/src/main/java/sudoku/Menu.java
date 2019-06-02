@@ -17,9 +17,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Locale;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 ////////////////////////////////////////////////////////////////// | Class: Menu
@@ -32,7 +30,7 @@ public class Menu {
                         "sudoku/Localization_" + lang + ".properties");
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream,
                 StandardCharsets.UTF_8);
-        ResourceBundle resourceBundleMenu = new PropertyResourceBundle(inputStreamReader);
+        resourceBundleMenu = new PropertyResourceBundle(inputStreamReader);
 
         startButton.setText(resourceBundleMenu.getString("startGame"));
         chooseLevel.getItems().clear();
@@ -94,6 +92,24 @@ public class Menu {
         localizeUserInterface("en");
     }
 
+    @FXML
+    private void onActionAuthors(final ActionEvent actionEvent)
+            throws IOException {
+        AuthorsBundle authors = new AuthorsBundle();
+        Object[][] contents = authors.getContents();
+        StringBuilder names = new StringBuilder();
+        for (int i = 0; i < contents.length; i++) {
+            names.append((String) contents[i][1]).append("\n");
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(resourceBundleMenu.getString("authors"));
+        alert.setHeaderText(null);
+        alert.setContentText(names.toString());
+
+        alert.showAndWait();
+    }
+
 
     //================================================================= | Data <
     @FXML
@@ -106,6 +122,8 @@ public class Menu {
     private TextField textFieldDifficulty;
 
     private static String level;
+
+    ResourceBundle resourceBundleMenu;
 
     @FXML
     MenuBar menuBar;

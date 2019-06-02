@@ -26,9 +26,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <TextField fx:id="textFieldDifficulty" alignment="CENTER"
-                 layoutX="355.0" layoutY="118.0" minWidth="600.0"
-                 text="Select difficulty" />
+      <TextField fx:id="textFieldDifficulty" alignment="CENTER" layoutX="355.0" layoutY="118.0" minWidth="600.0" text="Select difficulty" />
       <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Localization">
@@ -37,7 +35,10 @@
                   <MenuItem mnemonicParsing="false" onAction="#onActionEnglish" text="English" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Authors" />
+          <Menu mnemonicParsing="false" text="Authors">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onActionAuthors" text="Programmers" />
+               </items></Menu>
         </menus>
       </MenuBar>
     </children>
