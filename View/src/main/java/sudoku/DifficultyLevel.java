@@ -27,25 +27,9 @@ public class DifficultyLevel {
     }
 
     SudokuBoard modifySudokuBoard(final SudokuBoard sudokuBoard,
-                                  final String level) {
+                                  final int level) {
 
-        switch (level) {
-            case "Easy": {
-                fillRandomPositionsList(MISSING_SPOTS[0]);
-                break;
-            }
-            case "Medium": {
-                fillRandomPositionsList(MISSING_SPOTS[1]);
-                break;
-            }
-            case "Hard": {
-                fillRandomPositionsList(MISSING_SPOTS[2]);
-                break;
-            }
-            default: {
-                fillRandomPositionsList(MISSING_SPOTS[0]);
-            }
-        }
+        fillRandomPositionsList(MISSING_SPOTS[level]);
 
         for (Field it : position) {
             sudokuBoard.set(it.getX(), it.getY(), 0);

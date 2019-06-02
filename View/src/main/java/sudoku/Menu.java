@@ -67,7 +67,7 @@ public class Menu {
         localizeUserInterface(lang);
     }
 
-    static String getLevel() {
+    static int getLevel() {
         return level;
     }
 
@@ -75,7 +75,7 @@ public class Menu {
     private void onActionStartButton(final ActionEvent actionEvent)
             throws IOException {
         Menu.level = chooseLevel
-                .getSelectionModel().getSelectedItem().toString();
+                .getSelectionModel().getSelectedIndex();
         StageSetup.buildStage("Board.fxml");
 
     }
@@ -121,7 +121,7 @@ public class Menu {
     @FXML
     private TextField textFieldDifficulty;
 
-    private static String level;
+    private static int level;
 
     ResourceBundle resourceBundleMenu;
 
