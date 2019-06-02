@@ -22,9 +22,14 @@
     -fx-text-fill: #ffffff;
     -fx-background-color: #6f2223;
 }
-/* .sudoku-field {
-    -fx-effect: dropshadow(three-pass-box, #4e4e50, 10, 0, 0, 0);
-} */
+.button:selected {
+    -fx-border-color: #950740;
+    -fx-border-width: 4px;
+}
+.label {
+    -fx-alignment: center;
+    -fx-padding: 0px;
+}
 .text-field {
     -fx-alignment: center;
     -fx-padding: 0px;

@@ -34,6 +34,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-      <Button layoutX="934.0" layoutY="388.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="buttonVerify" layoutX="934.0" layoutY="388.0" mnemonicParsing="false" onAction="#onActionButtonVerify" text="Verify" />
+      <Label fx:id="labelIsCorrect" layoutX="943.0" layoutY="301.0" />
+      <Button fx:id="buttonSave" layoutX="937.0" layoutY="555.0" mnemonicParsing="false" onAction="#onActionButtonSave" text="Save" />
+      <Button fx:id="buttonLoad" layoutX="1108.0" layoutY="543.0" mnemonicParsing="false" onAction="#onActionButtonLoad" text="Load" />
     </children>
 </Pane>
