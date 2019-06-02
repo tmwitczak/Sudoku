@@ -15,6 +15,11 @@ import java.io.IOException;
 public class Menu {
 
     //============================================================ | Behaviour <
+    @FXML
+    private void initialize() {
+        chooseLevel.getSelectionModel().selectFirst();
+    }
+
     static String getLevel() {
         return level;
     }
@@ -22,21 +27,13 @@ public class Menu {
     @FXML
     private void onActionStartButton(final ActionEvent actionEvent)
             throws IOException {
-        StageSetup.buildStage("Board.fxml");
-    }
-
-    @FXML
-    private void onActionAcceptLevel(final ActionEvent actionEvent) {
         Menu.level = chooseLevel
                 .getSelectionModel().getSelectedItem().toString();
-
+        StageSetup.buildStage("Board.fxml");
     }
 
 
     //================================================================= | Data <
-    @FXML
-    private Button acceptLevel;
-
     @FXML
     private Button startButton;
 
