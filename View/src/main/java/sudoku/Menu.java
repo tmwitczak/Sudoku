@@ -13,11 +13,10 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -48,11 +47,26 @@ public class Menu {
                 "localization"));
         menuBar.getMenus().get(1).setText(resourceBundleMenu.getString(
                 "authors"));
+        menuBar.getMenus().get(0).getItems().get(0).setText(resourceBundleMenu.getString("polish"));
+        menuBar.getMenus().get(0).getItems().get(1).setText(resourceBundleMenu.getString("english"));
+
+        //Use try-with-resource to get auto-closeable writer instance
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(
+                "localization-language"))) {
+            writer.write(lang);
+        }
     }
 
     @FXML
     private void initialize() throws IOException {
-        localizeUserInterface("pl");
+        String lang;
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(
+                "localization-language"))) {
+            lang = reader.readLine();
+        } catch (Exception exception) {
+            lang = "pl";
+        }
+        localizeUserInterface(lang);
     }
 
     static String getLevel() {
@@ -70,7 +84,7 @@ public class Menu {
 
     @FXML
     private void onActionPolish(final ActionEvent actionEvent)
-        throws IOException {
+            throws IOException {
         localizeUserInterface("pl");
     }
 

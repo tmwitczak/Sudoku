@@ -7,11 +7,16 @@
     color-5: #c3073f;*/
 
     -fx-background-color: #1a1a1d;
-    -fx-font: 40px "Montserrat Light";
+    -fx-font: 30px "System";
 
 }
 
+.menu-bar {
+    -fx-font-size: 10px;
+}
 .button {
+    -fx-alignment: center;
+    -fx-padding: 0px;
     -fx-text-fill: #ffffff;
     -fx-background-color: #6f2223;
 }
@@ -27,6 +32,7 @@
     -fx-border-width: 4px;
 }
 .label {
+    -fx-font-size: 20px;
     -fx-alignment: center;
     -fx-padding: 0px;
 }

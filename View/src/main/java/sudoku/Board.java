@@ -24,8 +24,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 
@@ -34,11 +38,40 @@ public class Board {
 
     //============================================================ | Behaviour <
     //---------------------------------------------------------------- | FXML <<
+    private void localizeUserInterface(final String lang) throws IOException {
+        InputStream inputStream =
+                getClass().getClassLoader().getResourceAsStream(
+                        "sudoku/Localization_" + lang + ".properties");
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream,
+                StandardCharsets.UTF_8);
+
+        resourceBundleMenu = new PropertyResourceBundle(inputStreamReader);
+
+        buttonLoad.setText(resourceBundleMenu.getString("load"));
+        buttonSave.setText(resourceBundleMenu.getString("save"));
+        buttonVerify.setText(resourceBundleMenu.getString("verify"));
+
+        //Use try-with-resource to get auto-closeable writer instance
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(
+                "localization-language"))) {
+            writer.write(lang);
+        }
+    }
+
     @FXML
-    private void initialize() {
+    private void initialize() throws IOException {
         backtrackingSudokuSolver.solve(sudokuBoard);
         difficultyLevel.modifySudokuBoard(sudokuBoard, Menu.getLevel());
         createTextFieldsForSudokuBoard();
+
+        String lang;
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(
+                "localization-language"))) {
+            lang = reader.readLine();
+        } catch (Exception exception) {
+            lang = "pl";
+        }
+        localizeUserInterface(lang);
     }
 
     @FXML
@@ -98,9 +131,9 @@ public class Board {
         }
 
         if (isCorrect) {
-            labelIsCorrect.setText("correct");
+            labelIsCorrect.setText(resourceBundleMenu.getString("correct"));
         } else {
-            labelIsCorrect.setText("incorrect");
+            labelIsCorrect.setText(resourceBundleMenu.getString("notCorrect"));
         }
     }
 
@@ -179,6 +212,8 @@ public class Board {
 
     @FXML
     private Label labelIsCorrect;
+
+    ResourceBundle resourceBundleMenu;
 
     //--------------------------------------------------------- | SudokuBoard <<
     private TextField[][] textFields;
