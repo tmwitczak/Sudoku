@@ -1,10 +1,29 @@
 package jptw.sudoku;
 
 import java.io.*;
+import java.util.logging.*;
 
 public class FileSudokuBoardDao
         implements Dao<SudokuBoard>,
-        AutoCloseable {
+        AutoCloseable{
+
+    private static final LogManager logManager = LogManager.getLogManager();
+    private static final Logger logger = Logger.getLogger(FileSudokuBoardDao.class.getName());
+    static{
+        try {
+            Handler consoleHandler = new ConsoleHandler();
+            Handler fileHandler = new FileHandler("./start.log");
+            logger.addHandler(consoleHandler);
+            logger.addHandler(fileHandler);
+
+            logManager.readConfiguration(new FileInputStream("./loggerConfig.properties"));
+
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "FileOperationException: ", e);
+        }
+
+    }
+
 
     public void finalize() throws Exception {
         close();
@@ -28,8 +47,12 @@ public class FileSudokuBoardDao
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
             sudokuBoard = (SudokuBoard) objectInputStream.readObject();
         }
-        catch (ClassNotFoundException | IOException e) {
-            throw new RuntimeException(e);
+        catch (IOException e) {
+            logger.log(Level.WARNING, "FileOperationException: ", e);
+            throw new RuntimeException();
+        }catch (ClassNotFoundException e){
+            logger.log(Level.SEVERE, "ClassNotFoundException: ", e);
+            throw new RuntimeException();
         }
 
         return sudokuBoard;
@@ -37,12 +60,15 @@ public class FileSudokuBoardDao
 
     @Override
     public void write(final SudokuBoard obj) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(filename);
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-            objectOutputStream.writeObject(obj);
+
+        try (
+                FileOutputStream fileOutputStream = new FileOutputStream(filename);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+                objectOutputStream.writeObject(obj);
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, "FileOperationException: ", e);
+            throw new RuntimeException();
         }
     }
 

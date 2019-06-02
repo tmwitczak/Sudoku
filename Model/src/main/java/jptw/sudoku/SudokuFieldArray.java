@@ -20,7 +20,7 @@ class SudokuFieldArray implements Serializable, Cloneable {
     SudokuFieldArray(final List<SudokuField> fields) {
 
         if (fields.size() != NUMBER_OF_FIELDS) {
-            throw new IllegalArgumentException(
+            throw new InvalidArraySizeException(
                     "fields should contain 9 elements!");
         }
 

@@ -9,13 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.*;
 
 
 //////////////////////////////////////////////////////////// | Class: StageSetup
 public class StageSetup {
+
 
     //============================================================ | Behaviour <
     public static Stage getStage() {

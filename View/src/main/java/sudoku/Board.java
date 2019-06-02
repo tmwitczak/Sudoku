@@ -30,12 +30,29 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.logging.*;
 import java.util.regex.Pattern;
 
 
 ///////////////////////////////////////////////////////////////// | Class: Board
 public class Board {
 
+    private static final LogManager logManager = LogManager.getLogManager();
+    private static final Logger logger = Logger.getLogger(Start.class.getName());
+    static{
+        try {
+            Handler consoleHandler = new ConsoleHandler();
+            Handler fileHandler = new FileHandler("./start.log");
+            logger.addHandler(consoleHandler);
+            logger.addHandler(fileHandler);
+
+            logManager.readConfiguration(new FileInputStream("./loggerConfig.properties"));
+
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "FileOperationException: ", e);
+        }
+
+    }
     //============================================================ | Behaviour <
     //---------------------------------------------------------------- | FXML <<
     private void localizeUserInterface(final String lang) throws IOException {
@@ -55,6 +72,7 @@ public class Board {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(
                 "localization-language"))) {
             writer.write(lang);
+
         }
     }
 
@@ -70,6 +88,7 @@ public class Board {
             lang = reader.readLine();
         } catch (Exception exception) {
             lang = "pl";
+            logger.log(Level.WARNING, "FileOperationException: ", exception);
         }
         localizeUserInterface(lang);
     }
@@ -90,6 +109,7 @@ public class Board {
             fileSudokuBoardDao.write(sudokuBoard);
         } catch (Exception exception) {
             exception.printStackTrace();
+            logger.log(Level.WARNING, "FileOperationException: ", exception);
         }
     }
 
@@ -107,6 +127,7 @@ public class Board {
             sudokuBoard = fileSudokuBoardDao.read();
         } catch (Exception exception) {
             exception.printStackTrace();
+            logger.log(Level.WARNING, "FileOperationException: ", exception);
         }
 
         createTextFieldsForSudokuBoard();

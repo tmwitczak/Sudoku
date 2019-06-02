@@ -53,11 +53,11 @@ public class SudokuBoard implements Serializable, Cloneable {
     public int get(int x, int y) {
 
         if (x < 0 || x >= 9) {
-            throw new IllegalArgumentException(Integer.toString(x));
+            throw new InvalidValueException(Integer.toString(x));
         }
 
         if (y < 0 || y >= 9) {
-            throw new IllegalArgumentException(Integer.toString(y));
+            throw new InvalidValueException(Integer.toString(y));
         }
 
         return board.get(x).get(y).getFieldValue();
@@ -103,7 +103,7 @@ public class SudokuBoard implements Serializable, Cloneable {
     public boolean set(int x, int y, int value) {
 
         if (value < 0 || value > 9) {
-            throw new IllegalArgumentException(Integer.toString(value));
+            throw new InvalidValueException(Integer.toString(value));
         }
 
         int oldValue = get(x, y);

@@ -29,7 +29,7 @@ class SudokuField implements Serializable, Cloneable, Comparable<SudokuField> {
 
     public void setFieldValue(final int value) {
         if (value < 0 || value > 9) {
-            throw new IllegalArgumentException("value: " + value
+            throw new InvalidValueException("value: " + value
                     + " should be within the range of [0, 9]!");
         }
         this.value = value;
