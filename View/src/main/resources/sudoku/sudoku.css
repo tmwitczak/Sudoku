@@ -1,0 +1,28 @@
+.root {
+    /*color-1: #1a1a1d;
+    color-2: #ffffff;
+    color-3: #4e4e50;
+    color-4: #6f2223;
+    color-5: #950740;
+    color-5: #c3073f;*/
+
+    -fx-background-color: #1a1a1d;
+    -fx-font: 46px "System";
+
+}
+
+.button {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #6f2223;
+}
+.combo-box {
+    -fx-background-color: #c3073f;
+}
+.combo-box .cell {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #6f2223;
+}
+.text-field {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #6f2223;
+}
