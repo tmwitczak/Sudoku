@@ -47,6 +47,7 @@ public class Menu {
                 "authors"));
         menuBar.getMenus().get(0).getItems().get(0).setText(resourceBundleMenu.getString("polish"));
         menuBar.getMenus().get(0).getItems().get(1).setText(resourceBundleMenu.getString("english"));
+        menuBar.getMenus().get(1).getItems().get(0).setText(resourceBundleMenu.getString("programmers"));
 
         //Use try-with-resource to get auto-closeable writer instance
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(
@@ -103,7 +104,7 @@ public class Menu {
         }
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(resourceBundleMenu.getString("authors"));
+        alert.setTitle(resourceBundleMenu.getString("programmers"));
         alert.setHeaderText(null);
         alert.setContentText(names.toString());
 
