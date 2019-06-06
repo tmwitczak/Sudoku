@@ -1,6 +1,6 @@
 package jptw.sudoku;
 
-public interface Dao<T> {
-    T read();
-    void write(T obj);
+public interface Dao<T>{
+    T read() throws FileException;
+    void write(T obj) throws FileException;
 }

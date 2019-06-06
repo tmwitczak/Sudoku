@@ -15,10 +15,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 ////////////////////////////////////////////////////////////////// | Class: Menu
 public class Menu {
+
+    private static final Logger logger = Logger.getLogger(Menu.class.getName());
 
     //============================================================ | Behaviour <
     private void localizeUserInterface(final String lang) throws IOException {
@@ -50,6 +54,8 @@ public class Menu {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(
                 "localization-language"))) {
             writer.write(lang);
+        } catch (IOException e) {
+            throw new FileException(e);
         }
     }
 
@@ -59,8 +65,10 @@ public class Menu {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(
                 "localization-language"))) {
             lang = reader.readLine();
-        } catch (Exception exception) {
+            logger.log(Level.INFO, "Language set up.");
+        } catch (IOException exception) {
             lang = "pl";
+            logger.log(Level.WARNING, "Language set to default.");
         }
         localizeUserInterface(lang);
     }

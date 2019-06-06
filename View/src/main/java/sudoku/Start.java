@@ -17,39 +17,32 @@ import java.util.logging.*;
 public class Start
         extends Application {
 
-    private static final LogManager logManager = LogManager.getLogManager();
+
     private static final Logger logger = Logger.getLogger(Start.class.getName());
-    static{
-        try {
-            Handler consoleHandler = new ConsoleHandler();
-            Handler fileHandler = new FileHandler("./start.log");
-            logger.addHandler(consoleHandler);
-            logger.addHandler(fileHandler);
 
-            logManager.readConfiguration(new FileInputStream("./loggerConfig.properties"));
-
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "FileOperationException: ", e);
-        }
-
-    }
+//    static {
+//        String configPath = Start.class.getClassLoader().getResource("./resources/sudoku/loggerConfig.properties").getFile();
+//        System.setProperty("java.util.logging.config.file", configPath);
+//    }
 
 
     //============================================================ | Behaviour <
     public static void main(final String[] args) {
-        logger.log(Level.WARNING, "working");
+        logger.log(Level.INFO, "Launch");
         launch();
     }
 
     @Override
     public void start(final Stage stage)
-            throws IOException {
+            throws FileException {
         try {
             StageSetup.buildStage(stage,
                     "Menu.fxml",
                     "Sudoku");
+            logger.log(Level.INFO, "Setup stage");
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "IOException: ", e);
+            logger.log(Level.SEVERE, "File exception", e);
+            throw new FileException(e);
         }
 
     }

@@ -37,22 +37,9 @@ import java.util.regex.Pattern;
 ///////////////////////////////////////////////////////////////// | Class: Board
 public class Board {
 
-    private static final LogManager logManager = LogManager.getLogManager();
-    private static final Logger logger = Logger.getLogger(Start.class.getName());
-    static{
-        try {
-            Handler consoleHandler = new ConsoleHandler();
-            Handler fileHandler = new FileHandler("./start.log");
-            logger.addHandler(consoleHandler);
-            logger.addHandler(fileHandler);
 
-            logManager.readConfiguration(new FileInputStream("./loggerConfig.properties"));
+    private static final Logger logger = Logger.getLogger(Board.class.getName());
 
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "FileOperationException: ", e);
-        }
-
-    }
     //============================================================ | Behaviour <
     //---------------------------------------------------------------- | FXML <<
     private void localizeUserInterface(final String lang) throws IOException {
@@ -72,7 +59,9 @@ public class Board {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(
                 "localization-language"))) {
             writer.write(lang);
-
+        }catch (IOException e)
+        {
+         throw new FileException(e);
         }
     }
 
@@ -86,9 +75,10 @@ public class Board {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(
                 "localization-language"))) {
             lang = reader.readLine();
+            logger.log(Level.INFO,"Language set up.");
         } catch (Exception exception) {
             lang = "pl";
-            logger.log(Level.WARNING, "FileOperationException: ", exception);
+            logger.log(Level.WARNING, "Language set to default.", exception);
         }
         localizeUserInterface(lang);
     }
@@ -107,9 +97,10 @@ public class Board {
         try (FileSudokuBoardDao fileSudokuBoardDao = new FileSudokuBoardDao(
                 file.getAbsolutePath())) {
             fileSudokuBoardDao.write(sudokuBoard);
+            logger.log(Level.INFO, "Board saved");
         } catch (Exception exception) {
             exception.printStackTrace();
-            logger.log(Level.WARNING, "FileOperationException: ", exception);
+            logger.log(Level.WARNING, "Failed to save board", exception);
         }
     }
 
@@ -125,9 +116,10 @@ public class Board {
         try (FileSudokuBoardDao fileSudokuBoardDao = new FileSudokuBoardDao(
                 file.getAbsolutePath())) {
             sudokuBoard = fileSudokuBoardDao.read();
+            logger.log(Level.INFO, "Board loaded");
         } catch (Exception exception) {
             exception.printStackTrace();
-            logger.log(Level.WARNING, "FileOperationException: ", exception);
+            logger.log(Level.WARNING, "Failed to load board", exception);
         }
 
         createTextFieldsForSudokuBoard();
@@ -153,8 +145,10 @@ public class Board {
 
         if (isCorrect) {
             labelIsCorrect.setText(resourceBundleMenu.getString("correct"));
+            logger.log(Level.INFO, "Board verification: Correct");
         } else {
             labelIsCorrect.setText(resourceBundleMenu.getString("notCorrect"));
+            logger.log(Level.INFO, "Board verification: NotCorrect");
         }
     }
 

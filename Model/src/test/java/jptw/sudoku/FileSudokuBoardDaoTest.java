@@ -13,10 +13,13 @@ public class FileSudokuBoardDaoTest {
         SudokuBoard sudokuBoard1 = new SudokuBoard();
 
         // When:
-        fileSudokuBoardDao.write(sudokuBoard1);
-        SudokuBoard sudokuBoard2 = fileSudokuBoardDao.read();
-
+        try {
+            fileSudokuBoardDao.write(sudokuBoard1);
+            SudokuBoard sudokuBoard2 = fileSudokuBoardDao.read();
+            assertEquals(sudokuBoard1, sudokuBoard2);
+        } catch (FileException e) {
+        }
         // Then:
-        assertEquals(sudokuBoard1, sudokuBoard2);
+
     }
 }
