@@ -4,13 +4,12 @@ package sudoku;
 
 ////////////////////////////////////////////////////////////////////// | Imports
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 ///////////////////////////////////////////////////////////////// | Class: Start
