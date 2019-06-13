@@ -10,8 +10,9 @@ import java.util.Collections;
 
 
 ///////////////////////////////////////////// Class: BacktrackingSudokuSolver //
-public class BacktrackingSudokuSolver
-        implements SudokuSolver {
+public
+class BacktrackingSudokuSolver
+	implements SudokuSolver {
 
     //=========================================================== Behaviour ==//
     //-------------------------------------------------------------- Main --==//
