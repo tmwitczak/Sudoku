@@ -1,5 +1,8 @@
+///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
+
+///////////////////////////////////////////////////////////////////// Imports //
 import org.apache.commons.lang3.SerializationUtils;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -7,16 +10,22 @@ import java.io.*;
 import java.sql.*;
 import java.util.Arrays;
 
-public class JdbcSudokuBoardDao
-        implements Dao<SudokuBoard>,
-        AutoCloseable {
 
-    JdbcSudokuBoardDao(final String id) {
+/////////////////////////////////////////////////// Class: JdbcSudokuBoardDao //
+public
+class JdbcSudokuBoardDao
+        implements AutoCloseable,
+                   Dao<SudokuBoard> {
+
+    JdbcSudokuBoardDao
+            (final String id) {
+
         this.id = id;
     }
 
     @Override
-    public SudokuBoard read() {
+    public
+    SudokuBoard read() {
 
         try {
             Connection connection = connectToDerbyDatabase();
@@ -55,7 +64,8 @@ public class JdbcSudokuBoardDao
         return null;
     }
 
-    private Connection connectToDerbyDatabase()
+    private
+    Connection connectToDerbyDatabase()
             throws SQLException {
 
         return DriverManager.getConnection(
@@ -63,7 +73,8 @@ public class JdbcSudokuBoardDao
                         + ";create=true");
     }
 
-    private boolean checkIfDatabaseHasAlreadyBeenCreated(
+    private
+    boolean checkIfDatabaseHasAlreadyBeenCreated(
             final Connection connection)
             throws SQLException {
 
@@ -80,7 +91,8 @@ public class JdbcSudokuBoardDao
         return tables.next();
     }
 
-    private void createTableForSudokuBoards(final Connection connection)
+    private
+    void createTableForSudokuBoards(final Connection connection)
             throws SQLException {
 
         connection.createStatement().execute(
@@ -98,7 +110,8 @@ public class JdbcSudokuBoardDao
         );
     }
 
-    private void writeObjectToDatabase(final Connection connection,
+    private
+    void writeObjectToDatabase(final Connection connection,
                                        final Object obj)
             throws SQLException {
 
@@ -117,7 +130,9 @@ public class JdbcSudokuBoardDao
     }
 
     @Override
-    public void write(final SudokuBoard sudokuBoard) {
+    public
+    void write
+            (final SudokuBoard sudokuBoard) {
 
         try {
             Connection connection
@@ -137,9 +152,19 @@ public class JdbcSudokuBoardDao
     }
 
     @Override
-    public void close() {
+    public
+    void close() {
 
     }
 
-    private final String id;
+
+    //================================================================ Data ==//
+    private
+    final String id;
+
+
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
