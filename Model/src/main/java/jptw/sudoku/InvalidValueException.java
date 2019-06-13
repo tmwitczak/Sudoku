@@ -1,7 +1,20 @@
+///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
-public class InvalidValueException extends IllegalArgumentException {
-    public InvalidValueException(final String message) {
+
+//////////////////////////////////////////////// Class: InvalidValueException //
+public
+class InvalidValueException
+	extends IllegalArgumentException {
+
+    public
+    InvalidValueException
+            (final String message) {
+	    
         super(message);
     }
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
