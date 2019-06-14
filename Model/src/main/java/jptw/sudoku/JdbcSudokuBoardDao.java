@@ -4,6 +4,7 @@ package jptw.sudoku;
 
 ///////////////////////////////////////////////////////////////////// Imports //
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.derby.impl.drda.memCheck;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.*;
@@ -19,9 +20,17 @@ class JdbcSudokuBoardDao
 
     //=========================================================== Behaviour ==//
     //------------------------------------------------------ Constructors --==//
-    JdbcSudokuBoardDao(final String id) {
+    JdbcSudokuBoardDao(final String sudokuBoardId) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
-        this.id = id;
+        this.sudokuBoardId = sudokuBoardId;
+
+            connection = connectToDerbyDatabase();
+            if (!checkIfDatabaseHasAlreadyBeenCreated(connectToDerbyDatabase())) {
+                createTableForSudokuBoards(connection);
+                // Add checking for table existence
+            }
+
+        
     }
 
 
@@ -31,16 +40,14 @@ class JdbcSudokuBoardDao
     SudokuBoard read() {
 
         try {
-            Connection connection
-                = connectToDerbyDatabase();
+            PreparedStatement sqlSelectSudokuBoardStatement
+                    = connection.prepareStatement("select object from"
+                                                  + " sudoku_boards where"
+                                                  + " id = ?");
+            sqlSelectSudokuBoardStatement.setString(1, sudokuBoardId);
 
-            PreparedStatement pstmt = connection
-                                      .prepareStatement("select object from "
-                                                        + "sudoku_boards where "
-                                                        + " id = ?");
-            pstmt.setString(1, id);
-
-            ResultSet resultSet = pstmt.executeQuery();
+            ResultSet resultSet
+                    = sqlSelectSudokuBoardStatement.executeQuery();
             resultSet.next();
 
 
@@ -54,7 +61,7 @@ class JdbcSudokuBoardDao
 
 
             resultSet.close();
-            pstmt.close();
+            sqlSelectSudokuBoardStatement.close();
 
             connection.close();
 
@@ -64,38 +71,32 @@ class JdbcSudokuBoardDao
             
             sqlException.printStackTrace();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
-        }
-
+}
         return null;
     }
 
     private
     Connection connectToDerbyDatabase()
-            throws SQLException {
+            throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+                
+        Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
-        return DriverManager
-               .getConnection("jdbc:derby://localhost:1527/"
-                              + "sudokuDatabase"
-                              + ";create=true");
+        return DriverManager.getConnection(jdbcDerbyConnectionPrompt);
     }
 
     private
     boolean checkIfDatabaseHasAlreadyBeenCreated(final Connection connection)
             throws SQLException {
 
-        DatabaseMetaData databaseMetaData
-                = connection.getMetaData();
-
-        ResultSet tables
-                = databaseMetaData.getTables(connection.getCatalog(),
-                                             null,
-                                             null,
-                                             null);
-
-        return tables.next();
+        return connection.getMetaData()
+                         .getTables(null,
+                                    null,
+                                    "SUDOKU_BOARDS",
+                                    null)
+                         .next();
     }
 
     private
@@ -121,16 +122,24 @@ class JdbcSudokuBoardDao
                                final Object obj)
             throws SQLException {
 
+        PreparedStatement deleteStatement = connection.prepareStatement(
+            "delete from SUDOKU_BOARDS where id = '" + sudokuBoardId + "'"
+        );
+        deleteStatement.executeUpdate();
+
+        // TODO: Write SQL statements as final Strings;
         PreparedStatement preparedStatement
-                = connection.prepareStatement(
-                        "insert into" +
-                        "    sudoku_boards (id, name, object)" +
-                        "    values (?, ?, ?)");
-        preparedStatement.setString(1, id);
+                = connection.prepareStatement("insert into"
+                                              + " sudoku_boards (id,"
+                                                + "              name, "
+                                                + "              object)"
+                                              + " values (?, ?, ?)");
+        preparedStatement.setString(1, sudokuBoardId);
         preparedStatement.setString(2, obj.getClass().getName());
-        Blob blob
-                = new SerialBlob(SerializationUtils.serialize(
-                        (SudokuBoard) obj).clone());
+
+        Blob blob = new SerialBlob(SerializationUtils
+                                           .serialize((SudokuBoard) obj)
+                                                              .clone());
         preparedStatement.setBlob(3, blob);
         preparedStatement.executeUpdate();
     }
@@ -140,32 +149,38 @@ class JdbcSudokuBoardDao
     void write(final SudokuBoard sudokuBoard) {
 
         try {
-            Connection connection
-                    = connectToDerbyDatabase();
 
-            if (!checkIfDatabaseHasAlreadyBeenCreated(connection)) {
-                createTableForSudokuBoards(connection);
-            }
+            writeObjectToDatabase(connection,
+                                  sudokuBoard);
 
-            writeObjectToDatabase(connection, sudokuBoard);
+        } catch (Exception sqlException) {
 
-            connection.close();
-
-        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
     }
 
     @Override
     public
-    void close() {
+    void close() throws SQLException {
 
+        connection.close();
     }
 
 
     //================================================================ Data ==//
-    private
-    final String id;
+    private final
+    Connection connection;
+
+    private static final
+    String databaseName = "sudokuGameDatabase";
+    
+    private static final
+    String jdbcDerbyConnectionPrompt = "jdbc:derby:"
+                                        + databaseName 
+                                        + ";create=true";
+
+    private final 
+    String sudokuBoardId;
 
 
 }

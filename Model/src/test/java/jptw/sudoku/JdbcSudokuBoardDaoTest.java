@@ -1,29 +1,59 @@
+///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
+
+///////////////////////////////////////////////////////////////////// Imports //
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class JdbcSudokuBoardDaoTest {
 
+/////////////////////////////////////////////// Class: JdbcSudokuBoardDaoTest //
+public
+class JdbcSudokuBoardDaoTest {
+
+    //=========================================================== Behaviour ==//
+    //------------------------------------------------------------- Tests --==//
+    //................................................... IO operations ..--==//
     @Test
-    public void readAndWrite() {
+    public
+    void writeSudokuBoardToAndReadFromDatabase()
+            throws Exception,
+                   InstantiationException,
+                   IllegalAccessException,
+                   ClassNotFoundException {
 
-        SudokuBoardDaoFactory sudokuBoardDaoFactory
-                = new SudokuBoardDaoFactory();
+        // Given:
+        final
+        SudokuBoard expectedSudokuBoard
+                = new SudokuBoard();
 
-        try (JdbcSudokuBoardDao jdbcSudokuBoardDao =
-                     sudokuBoardDaoFactory.getJdbcDao("siemka")) {
+        (new BacktrackingSudokuSolver()).solve(expectedSudokuBoard);
 
-            BacktrackingSudokuSolver backtrackingSudokuSolver =
-                    new BacktrackingSudokuSolver();
-            SudokuBoard sudokuBoard1 = new SudokuBoard();
-            backtrackingSudokuSolver.solve(sudokuBoard1);
-            jdbcSudokuBoardDao.write(sudokuBoard1);
+        final
+        String sudokuBoardName
+                = "sudokuBoardTest";
 
-            SudokuBoard sudokuBoard2 = jdbcSudokuBoardDao.read();
+        // When:
+        SudokuBoard actualSudokuBoard;
+        try (final
+             JdbcSudokuBoardDao jdbcSudokuBoardDao
+                     = (new SudokuBoardDaoFactory())
+                               .getJdbcDao(sudokuBoardName)) {
 
-            assertEquals(sudokuBoard1, sudokuBoard2);
+            jdbcSudokuBoardDao.write(expectedSudokuBoard);
+
+            actualSudokuBoard = jdbcSudokuBoardDao.read();
         }
+
+        // Then:
+        assertEquals(expectedSudokuBoard,
+                     actualSudokuBoard);
     }
+
+
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
