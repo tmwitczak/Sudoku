@@ -1,14 +1,30 @@
+///////////////////////////////////////////////////////////////////// Package //
 package sudoku;
 
+
+///////////////////////////////////////////////////////////////////// Package //
 import java.util.ListResourceBundle;
 
-public class AuthorsBundle extends ListResourceBundle {
-    public Object[][] getContents() {
+
+//////////////////////////////////////////////////////// Class: AuthorsBundle //
+public
+class AuthorsBundle
+        extends ListResourceBundle {
+
+    public
+    Object[][] getContents() {
         return contents;
     }
 
-    private Object[][] contents = {
+    private
+    Object[][] contents = {
             {"programmer1", "Jakub Plich"},
             {"programmer2", "Tomasz Witczak"},
     };
+
+
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
