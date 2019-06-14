@@ -1,9 +1,20 @@
 ///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
-public interface Dao<T>{
-    T read() throws FileException;
-    void write(T obj) throws FileException;
+
+////////////////////////////////////////////////////////////// Interface: Dao //
+public
+interface Dao<T>
+        extends AutoCloseable {
+
+    //=========================================================== Behaviour ==//
+    T read()
+        throws FileException;
+    
+    void write(T obj)
+        throws FileException;
+
+
 }
 
 
