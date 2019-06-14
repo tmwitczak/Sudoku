@@ -46,13 +46,13 @@ class Start
             logger.log(Level.INFO,
                        "Setup stage");
 
-        } catch (IOException e) {
+        } catch (IOException ioException) {
 
             logger.log(Level.SEVERE,
                        "File exception",
-                       e);
+                       ioException);
 
-            throw new FileException(e);
+            throw new FileException(ioException);
         }
     }
 
