@@ -228,9 +228,9 @@ class Board {
                 //textField.setFont(Font.font(20));
                 textField.pseudoClassStateChanged(PseudoClass.getPseudoClass(
                         "sudoku-field"), true);
-                if (sudokuBoard.get(i, j) != 0) {
-                    textField.setDisable(true);
-                    textField.setText(String.valueOf(sudokuBoard.get(i, j)));
+                if (sudokuBoard.get(i, j).getFieldValue() != 0) {
+                    textField.setDisable(!sudokuBoard.get(i, j).getFieldMutability());
+                    textField.setText(String.valueOf(sudokuBoard.get(i, j).getFieldValue()));
                 }
                 grid.add(textField, j, i);
             }

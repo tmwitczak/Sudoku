@@ -33,6 +33,7 @@ public class DifficultyLevel {
 
         for (Field it : position) {
             sudokuBoard.set(it.getX(), it.getY(), 0);
+            sudokuBoard.setMutability(it.getX(), it.getY(), true);
         }
         return sudokuBoard;
     }

@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 
 ////////////////////////////////////////////////////////// Class: SudokuField //
+public
 class SudokuField
         implements Cloneable,
                    Comparable<SudokuField>,

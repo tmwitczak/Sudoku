@@ -79,8 +79,8 @@ class SudokuBoard
     }
 
     public
-    int get(int x,
-            int y) {
+    SudokuField get(int x,
+                    int y) {
 
         if (x < 0 || x >= 9) {
 
@@ -92,9 +92,9 @@ class SudokuBoard
             throw new InvalidValueException(Integer.toString(y));
         }
 
-        return board.get(x)
-                    .get(y)
-                    .getFieldValue();
+        return (SudokuField) board.get(x)
+                                  .get(y)
+                                  .clone();
     }
 
     SudokuRow getRow(final int x) {
@@ -123,7 +123,7 @@ class SudokuBoard
         for (int i = 0;
              i < column.size();
              i++) {
-        
+
             column.set(i,
                        new SudokuField(board.get(i)
                                             .get(y)
@@ -170,8 +170,16 @@ class SudokuBoard
         }
 
         board.get(x)
-             .set(y,
-                  new SudokuField(value));
+                .get(y).setFieldValue(value);
+    }
+
+    public
+    void setMutability(int x,
+             int y,
+             boolean isMutable) {
+
+        board.get(x)
+             .get(y).setFieldMutability(isMutable);
     }
 
 
@@ -198,7 +206,7 @@ class SudokuBoard
             for (int j = 0;
                  j < (BOARD_SIZE / BOX_SIZE);
                  j++) {
-            
+
                 if (!getBox(BOX_SIZE * i,
                             BOX_SIZE * j).verify()) {
 
@@ -272,7 +280,7 @@ class SudokuBoard
     //================================================================ Data ==//
     private
     List<List<SudokuField>> board;
-    
+
     public static final
     int BOARD_SIZE
             = 9;
