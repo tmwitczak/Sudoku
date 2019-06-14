@@ -3,4 +3,7 @@
 *.iml
 */target/
 Model/test
-
+.vscode
+*.project
+*.prefs
+*.classpath
