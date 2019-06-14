@@ -17,22 +17,28 @@ class JdbcSudokuBoardDao
         implements AutoCloseable,
                    Dao<SudokuBoard> {
 
+    //=========================================================== Behaviour ==//
+    //------------------------------------------------------ Constructors --==//
     JdbcSudokuBoardDao
             (final String id) {
 
         this.id = id;
     }
 
+
+    //------------------------ Interface implementation: Dao<SudokuBoard> --==//
     @Override
     public
     SudokuBoard read() {
 
         try {
-            Connection connection = connectToDerbyDatabase();
+            Connection connection
+                = connectToDerbyDatabase();
 
             PreparedStatement pstmt = connection
-                    .prepareStatement("select object from " +
-                            "sudoku_boards where id = ?");
+                                      .prepareStatement("select object from "
+                                                        + "sudoku_boards where "
+                                                        + " id = ?");
             pstmt.setString(1, id);
 
             ResultSet resultSet = pstmt.executeQuery();
@@ -56,8 +62,11 @@ class JdbcSudokuBoardDao
             return (SudokuBoard) deSerializedObject;
 
         } catch (SQLException sqlException) {
+            
             sqlException.printStackTrace();
+
         } catch (IOException e) {
+
             e.printStackTrace();
         }
 
@@ -65,54 +74,56 @@ class JdbcSudokuBoardDao
     }
 
     private
-    Connection connectToDerbyDatabase()
+    Connection connectToDerbyDatabase
+            ()
             throws SQLException {
 
-        return DriverManager.getConnection(
-                "jdbc:derby://localhost:1527/" + "sudokuDatabase"
-                        + ";create=true");
+        return DriverManager
+               .getConnection("jdbc:derby://localhost:1527/"
+                              + "sudokuDatabase"
+                              + ";create=true");
     }
 
     private
-    boolean checkIfDatabaseHasAlreadyBeenCreated(
-            final Connection connection)
+    boolean checkIfDatabaseHasAlreadyBeenCreated
+            (final Connection connection)
             throws SQLException {
 
         DatabaseMetaData databaseMetaData
-            = connection.getMetaData();
+                = connection.getMetaData();
 
         ResultSet tables
-            = databaseMetaData.getTables(
-                connection.getCatalog(),
-                null,
-                null,
-                null);
+                = databaseMetaData.getTables(connection.getCatalog(),
+                                             null,
+                                             null,
+                                             null);
 
         return tables.next();
     }
 
     private
-    void createTableForSudokuBoards(final Connection connection)
+    void createTableForSudokuBoards
+            (final Connection connection)
             throws SQLException {
 
-        connection.createStatement().execute(
-                "create table sudoku_boards" +
-                "(" +
-                "    id varchar(30) not null" +
-                "        constraint primary_key_sudoku_boards_id" +
-                "            primary key," +
-                "" +
-                "    name varchar(30)," +
-                "" +
-                "    object blob not null" +
-                "" +
-                ")"
-        );
+        connection.createStatement()
+                  .execute("create table sudoku_boards"
+                           + "("
+                           + "    id varchar(30) not null"
+                           + "        constraint primary_key_sudoku_boards_id"
+                           + "            primary key,"
+                           + ""
+                           + "    name varchar(30),"
+                           + ""
+                           + "    object blob not null"
+                           + ""
+                           + ")");
     }
 
     private
-    void writeObjectToDatabase(final Connection connection,
-                                       final Object obj)
+    void writeObjectToDatabase
+            (final Connection connection,
+             final Object obj)
             throws SQLException {
 
         PreparedStatement preparedStatement
