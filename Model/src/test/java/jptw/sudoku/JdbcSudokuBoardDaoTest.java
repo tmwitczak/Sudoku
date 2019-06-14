@@ -7,18 +7,20 @@ import static org.junit.Assert.*;
 public class JdbcSudokuBoardDaoTest {
 
     @Test
-    public void readAndWrite() {
+    public void readAndWrite() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         SudokuBoardDaoFactory sudokuBoardDaoFactory
                 = new SudokuBoardDaoFactory();
 
-        try (JdbcSudokuBoardDao jdbcSudokuBoardDao =
-                     sudokuBoardDaoFactory.getJdbcDao("siemka")) {
+        try (JdbcSudokuBoardDao jdbcSudokuBoardDao
+                     = sudokuBoardDaoFactory.getJdbcDao("jdbcD2aoTest")) {
 
-            BacktrackingSudokuSolver backtrackingSudokuSolver =
-                    new BacktrackingSudokuSolver();
+            BacktrackingSudokuSolver backtrackingSudokuSolver
+                    = new BacktrackingSudokuSolver();
+
             SudokuBoard sudokuBoard1 = new SudokuBoard();
             backtrackingSudokuSolver.solve(sudokuBoard1);
+
             jdbcSudokuBoardDao.write(sudokuBoard1);
 
             SudokuBoard sudokuBoard2 = jdbcSudokuBoardDao.read();

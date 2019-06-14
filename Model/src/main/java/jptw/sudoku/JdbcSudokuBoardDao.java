@@ -29,7 +29,6 @@ class JdbcSudokuBoardDao
     @Override
     public
     SudokuBoard read() {
-
         try {
             Connection connection
                 = connectToDerbyDatabase();
@@ -67,17 +66,28 @@ class JdbcSudokuBoardDao
         } catch (IOException e) {
 
             e.printStackTrace();
-        }
+        } catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         return null;
     }
 
     private
     Connection connectToDerbyDatabase()
-            throws SQLException {
+            throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+                
+        Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
         return DriverManager
-               .getConnection("jdbc:derby://localhost:1527/"
+               .getConnection("jdbc:derby:"
                               + "sudokuDatabase"
                               + ";create=true");
     }
@@ -151,7 +161,7 @@ class JdbcSudokuBoardDao
 
             connection.close();
 
-        } catch (SQLException sqlException) {
+        } catch (Exception sqlException) {
             sqlException.printStackTrace();
         }
     }
