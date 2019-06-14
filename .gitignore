@@ -7,3 +7,10 @@ Model/test
 *.project
 *.prefs
 *.classpath
+*.dat
+derby.log
+localization-language
+*.properties
+*.ctrl
+*.lck
+
