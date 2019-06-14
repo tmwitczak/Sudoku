@@ -7,6 +7,7 @@ public
 class InvalidValueException
 	extends IllegalArgumentException {
 
+    //=========================================================== Behaviour ==//
     public
     InvalidValueException
             (final String message) {
