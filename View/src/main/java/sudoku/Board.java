@@ -1,35 +1,26 @@
 ///////////////////////////////////////////////////////////////////// Package //
 package sudoku;
 
-
 ///////////////////////////////////////////////////////////////////// Imports //
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.util.StringConverter;
-import javafx.util.converter.CharacterStringConverter;
-import javafx.util.converter.IntegerStringConverter;
-import jptw.sudoku.BacktrackingSudokuSolver;
-import jptw.sudoku.FileSudokuBoardDao;
-import jptw.sudoku.SudokuBoard;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.util.converter.CharacterStringConverter;
+import jptw.sudoku.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 
@@ -106,15 +97,23 @@ class Board {
 
         onActionButtonVerify(actionEvent);
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Sudoku to file");
-        File file = fileChooser.showSaveDialog(((Node) actionEvent.getSource())
-                .getScene().getWindow());
+        TextInputDialog dialog = new TextInputDialog(null);
+        dialog.setTitle("Save Sudoku Board");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Enter sudoku name: ");
 
-        try (FileSudokuBoardDao fileSudokuBoardDao = new FileSudokuBoardDao(
-                file.getAbsolutePath())) {
-            fileSudokuBoardDao.write(sudokuBoard);
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            System.out.println("Your name: " + result.get());
+        }
+
+        try (Dao<SudokuBoard> jdbcSudokuBoardDao
+                     = (new SudokuBoardDaoFactory())
+                               .getJdbcDao(result.get())) {
+
+            jdbcSudokuBoardDao.write(sudokuBoard);
             logger.log(Level.INFO, "Board saved");
+
         } catch (Exception exception) {
             exception.printStackTrace();
             logger.log(Level.WARNING, "Failed to save board", exception);
@@ -125,14 +124,20 @@ class Board {
     private void onActionButtonLoad(final ActionEvent actionEvent)
             throws IOException {
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Sudoku from file");
-        File file = fileChooser.showOpenDialog(((Node) actionEvent.getSource())
-                .getScene().getWindow());
+        TextInputDialog dialog = new TextInputDialog(null);
+        dialog.setTitle("Save Sudoku Board");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Enter sudoku name: ");
 
-        try (FileSudokuBoardDao fileSudokuBoardDao = new FileSudokuBoardDao(
-                file.getAbsolutePath())) {
-            sudokuBoard = fileSudokuBoardDao.read();
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            System.out.println("Your name: " + result.get());
+        }
+
+        try (Dao<SudokuBoard> jdbcSudokuBoardDao
+                     = (new SudokuBoardDaoFactory())
+                               .getJdbcDao(result.get())) {
+            sudokuBoard = jdbcSudokuBoardDao.read();
             logger.log(Level.INFO, "Board loaded");
         } catch (Exception exception) {
             exception.printStackTrace();
