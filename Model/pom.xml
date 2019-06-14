@@ -8,7 +8,7 @@
     <!-- ==================================== Parent: SudokuGameProject ==// -->
     <parent>
         <groupId>jptw.sudoku</groupId>
-        <artifactId>sudoku-game-project</artifactId>
+        <artifactId>sudoku-game</artifactId>
         <version>2.0-SNAPSHOT</version>
     </parent>
 
@@ -16,10 +16,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ========================================== Project information ==// -->
-    <artifactId>ModelProject</artifactId>
+    <artifactId>sudoku-game-model</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Model</name>
+    <name>Logical model for Sudoku Game</name>
 
     <!-- ==================================================== Packaging ==// -->
     <packaging>jar</packaging>

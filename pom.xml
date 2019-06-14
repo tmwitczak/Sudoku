@@ -11,10 +11,10 @@
 
     <!-- ========================================== Project information ==// -->
     <groupId>jptw.sudoku</groupId>
-    <artifactId>sudoku-game-project</artifactId>
+    <artifactId>sudoku-game</artifactId>
     <version>2.0-SNAPSHOT</version>
 
-    <name>SudokuGame</name>
+    <name>Sudoku Game</name>
 
 
     <!-- ==================================================== Packaging ==// -->
