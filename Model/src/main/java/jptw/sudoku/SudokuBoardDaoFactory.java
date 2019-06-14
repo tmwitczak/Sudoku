@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
+import java.sql.SQLException;
 
 //////////////////////////////////////////////////////////// Class: SudokuBox //
 public
@@ -15,7 +16,7 @@ class SudokuBoardDaoFactory {
     }
 
     public
-    JdbcSudokuBoardDao getJdbcDao(final String filename) {
+    JdbcSudokuBoardDao getJdbcDao(final String filename) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
         return new JdbcSudokuBoardDao(filename);
     }
