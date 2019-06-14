@@ -11,7 +11,7 @@
 
     <!-- ========================================== Project information ==// -->
     <groupId>jptw.sudoku</groupId>
-    <artifactId>SudokuGameProject</artifactId>
+    <artifactId>sudoku-game-project</artifactId>
     <version>2.0-SNAPSHOT</version>
 
     <name>SudokuGame</name>
