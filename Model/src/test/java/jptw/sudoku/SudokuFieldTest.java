@@ -1,150 +1,293 @@
-//////////////////////////////////////////////////////////////////////// Package
+///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
-//////////////////////////////////////////////////////////////////////// Imports
 
-import org.junit.After;
-import org.junit.Before;
+///////////////////////////////////////////////////////////////////// Imports //
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-////////////////////////////////////////////////////////// Test class definition
-public class SudokuFieldTest {
-    //////////////////////////////////////////////////////////////////// [Tests]
+
+////////////////////////////////////////////////////// Class: SudokuFieldTest //
+public
+class SudokuFieldTest {
+
+    //=========================================================== Behaviour ==//
+    //------------------------------------------------------------- Tests --==//
     @Rule
-    public final ExpectedException expectedException = ExpectedException.none();
+    public final
+    ExpectedException expectedException
+            = ExpectedException.none();
 
     @Test
-    public void constructorWithoutArguments() {
-        int expectedValue = 0;
+    public
+    void constructorWithoutArguments() {
 
-        sudokuField = new SudokuField();
-        int actualValue = sudokuField.getFieldValue();
+        // Given:
+        final
+        int expectedFieldValue = 0;
 
-        assertEquals(expectedValue, actualValue);
+        // When:
+        final
+        int actualFieldValue = (new SudokuField()).getFieldValue();
+
+        // Then:
+        assertEquals(expectedFieldValue,
+                     actualFieldValue);
     }
 
     @Test
-    public void constructorWithValueCorrect() {
-        int expectedValue = 5;
+    public
+    void constructorWithValueCorrect() {
 
-        sudokuField = new SudokuField(expectedValue);
-        int actualValue = sudokuField.getFieldValue();
+        // Given:
+        final
+        int expectedFieldValue = 5;
 
-        assertEquals(expectedValue, actualValue);
+        // When:
+        final
+        int actualValue = (new SudokuField(expectedFieldValue)).getFieldValue();
+
+        // Then:
+        assertEquals(expectedFieldValue,
+                     actualValue);
     }
 
     @Test
-    public void constructorWithValueIncorrect() {
-        int expectedValue = 12;
-        String expectedMessage = "value: " + expectedValue
-                + " should be within the range of [0, 9]!";
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(expectedMessage);
+    public
+    void constructorWithValueIncorrect() {
 
-        sudokuField = new SudokuField(expectedValue);
+        // Given:
+        final
+        int expectedFieldValue = 12;
+
+        // Expect:
+        expectedException.expect(InvalidValueException.class);
+        expectedException.expectMessage("value: "
+                                         + expectedFieldValue
+                                         + " should be within the range"
+                                           + " of [0, 9]!");
+
+        // When:
+        new SudokuField(expectedFieldValue);
     }
 
     @Test
-    public void setFieldValueCorrect() {
-        sudokuField = new SudokuField();
-        int expectedValue = 2;
+    public
+    void setFieldValueCorrect() {
 
-        sudokuField.setFieldValue(expectedValue);
-        int actualValue = sudokuField.getFieldValue();
+        // Given:
+        final
+        int expectedSudokuFieldValue = 2;
 
-        assertEquals(expectedValue, actualValue);
+        // When:
+        final
+        SudokuField sudokuField = new SudokuField();
+
+        sudokuField.setFieldValue(expectedSudokuFieldValue);
+
+        int actualSudokuFieldValue = sudokuField.getFieldValue();
+
+        // Then:
+        assertEquals(expectedSudokuFieldValue,
+                     actualSudokuFieldValue);
     }
 
     @Test
-    public void setFieldValueIncorrectLower() {
-        sudokuField = new SudokuField();
-        int expectedValue = -2;
-        String expectedMessage = "value: " + expectedValue
-                + " should be within the range of [0, 9]!";
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(expectedMessage);
+    public
+    void setFieldValueIncorrectLower() {
 
-        sudokuField.setFieldValue(expectedValue);
+        // Given:
+        final
+        int incorrectSudokuFieldValue = -2;
+
+        // Expect:
+        expectedException.expect(InvalidValueException.class);
+        expectedException.expectMessage("value: "
+                                        + incorrectSudokuFieldValue
+                                        + " should be within the range"
+                                          + " of [0, 9]!");
+
+        // When:
+        (new SudokuField()).setFieldValue(incorrectSudokuFieldValue);
     }
 
     @Test
-    public void setFieldValueIncorrectHigher() {
-        sudokuField = new SudokuField();
-        int expectedValue = 12;
-        String expectedMessage = "value: " + expectedValue
-                + " should be within the range of [0, 9]!";
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage(expectedMessage);
+    public
+    void setFieldValueIncorrectHigher() {
 
-        sudokuField.setFieldValue(expectedValue);
+        // Given:
+        int incorrectSudokuFieldValue = 12;
+
+        // Expect:
+        expectedException.expect(InvalidValueException.class);
+        expectedException.expectMessage("value: "
+                                        + incorrectSudokuFieldValue
+                                        + " should be within the range"
+                                          + " of [0, 9]!");
+
+        // When:
+        (new SudokuField()).setFieldValue(incorrectSudokuFieldValue);
     }
 
     @Test
-    public void equalsThis() {
-        sudokuField = new SudokuField();
+    public
+    void equalsThis() {
 
-        assertThat(sudokuField.equals(sudokuField), is(true));
-        assertThat(sudokuField.hashCode() == sudokuField.hashCode(),
-                is(true));
+        // Given:
+        final
+        SudokuField sudokuField = new SudokuField();
+
+        // Then:
+        assertTrue(sudokuField.equals(sudokuField));
+
+        assertTrue(sudokuField.hashCode() == sudokuField.hashCode());
     }
 
     @Test
-    public void equalsNull() {
-        sudokuField = new SudokuField();
+    public
+    void equalsNull() {
 
-        assertThat(sudokuField.equals(null), is(false));
+        // Given:
+        final
+        SudokuField sudokuField = new SudokuField();
+
+        // Then:
+        assertNotNull(sudokuField);
+
+        assertNotEquals(sudokuField, null);
     }
 
     @Test
-    public void equalsDifferentClass() {
-        sudokuField = new SudokuField();
-        Integer integerObject = 0;
+    public
+    void equalsDifferentClass() {
+        
+        // Given:
+        final
+        SudokuField sudokuField = new SudokuField();
 
-        assertThat(sudokuField.equals(integerObject), is(false));
+        final
+        Integer integer = 0;
+
+        // Then:
+        assertFalse(sudokuField.equals(integer));
     }
 
     @Test
-    public void equalsSymmetric() {
-        SudokuBoard a = new SudokuBoard(),
-                b = new SudokuBoard();
+    public
+    void equalsSymmetric() {
 
-        assertThat(a.equals(b) && b.equals(a), is(true));
-        assertEquals(a.hashCode(), b.hashCode());
+        // Given:
+        SudokuField sudokuField1 = new SudokuField(),
+                    sudokuField2 = new SudokuField();
+
+        // Then:
+        assertTrue(sudokuField1.equals(sudokuField2)
+                   &&
+                   sudokuField2.equals(sudokuField1));
+
+        assertEquals(sudokuField1.hashCode(),
+                     sudokuField2.hashCode());
     }
 
     @Test
-    public void toStringMethod() {
-        sudokuField = new SudokuField(5);
+    public
+    void toStringMethod() {
+
+        // Given:
+        final
+        int expectedSudokuFieldValue = 5;
+
+        final
+        String expectedToStringValue = "5";
+
+        // When:
+        final
+        SudokuField sudokuField = new SudokuField(expectedSudokuFieldValue);
+
+        // Then:
         assertNotNull(sudokuField.toString());
-        assertEquals("5", sudokuField.toString());
+
+        assertEquals(expectedToStringValue,
+                     sudokuField.toString());
     }
 
     @Test
-    public void compare() {
-        SudokuField field1 = new SudokuField(3);
-        SudokuField field2 = new SudokuField(7);
-        SudokuField field3 = new SudokuField(7);
-        assertEquals(-1, field1.compareTo(field2));
-        assertEquals(1, field2.compareTo(field1));
-        assertEquals(0, field2.compareTo(field3));
+    public
+    void compareEqual() {
 
+        // Given:
+        final
+        int expectedComparisonResult = 0;
+
+        final
+        SudokuField field1 = new SudokuField(4),
+                    field2 = new SudokuField(4);
+
+        // Then:
+        assertEquals(expectedComparisonResult,
+                     field1.compareTo(field2));
     }
 
     @Test
-    public void cloneTest() {
-        SudokuField field1 = new SudokuField(3);
-        Object field2 = field1.clone();
-        assertThat(field1.equals(field2) && field2.equals(field1), is(true));
-        assertEquals(field1.hashCode(), field2.hashCode());
+    public
+    void compareLess() {
+
+        // Given:
+        final
+        int expectedComparisonResult = -1;
+
+        final
+        SudokuField field1 = new SudokuField(1),
+                    field2 = new SudokuField(4);
+
+        // Then:
+        assertEquals(expectedComparisonResult,
+                     field1.compareTo(field2));
     }
 
-    /////////////////////////////////////////////////////////////////// [Fields]
-    private SudokuField sudokuField;
+    @Test
+    public
+    void compareGreater() {
+
+        // Given:
+        final
+        int expectedComparisonResult = 1;
+
+        final
+        SudokuField field1 = new SudokuField(4),
+                    field2 = new SudokuField(1);
+
+        // Then:
+        assertEquals(expectedComparisonResult,
+                     field1.compareTo(field2));
+    }
+
+    @Test
+    public
+    void cloneTest() {
+
+        // Given:
+        final
+        int sudokuFieldValue = 3;
+
+        final
+        SudokuField sudokuFieldOriginal = new SudokuField(sudokuFieldValue);
+
+        // When:
+        SudokuField sudokuFieldCloned
+                = (SudokuField) sudokuFieldOriginal.clone();
+
+        // Then:
+        assertTrue(sudokuFieldOriginal.equals(sudokuFieldCloned)
+                   && sudokuFieldCloned.equals(sudokuFieldOriginal));
+
+        assertEquals(sudokuFieldOriginal.hashCode(),
+                     sudokuFieldCloned.hashCode());
+    }
+
 
 }
 
