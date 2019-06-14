@@ -4,7 +4,8 @@ package jptw.sudoku;
 
 ////////////////////////////////////////////////////////////// Interface: Dao //
 public
-interface Dao<T> {
+interface Dao<T>
+        extends AutoCloseable {
 
     //=========================================================== Behaviour ==//
     T read()
