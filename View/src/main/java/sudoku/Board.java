@@ -158,8 +158,9 @@ class Board {
 
                     if (!content.isEmpty()) {
                         System.out.println(content);
-                        isCorrect &= sudokuBoard.set(i, j,
+                        sudokuBoard.set(i, j,
                                 content.charAt(0) - '0');
+                        isCorrect &= sudokuBoard.checkBoard();
                     }
                 }
             }

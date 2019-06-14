@@ -43,7 +43,9 @@ class BacktrackingSudokuSolver
         for (int randomSudokuNumber
                 : randomSudokuNumbers) {
 
-            if (board.set(i, j, randomSudokuNumber)) {
+            board.set(i, j, randomSudokuNumber);
+
+            if (board.checkBoard()) {
 
                 if (solve(board)) {
 

@@ -123,7 +123,9 @@ public class SudokuFieldArrayTest {
     @Test
     public void toStringMethod() {
         assertNotNull(A.toString());
-        assertEquals(A.toString(), "[1, 2, 3, 4, 5, 6, 7, 8, 9]");
+        assertEquals(A.toString(), "[1,false, 2,false, 3,false, 4,false,"
+                                   + " 5,false, 6,false, 7,false, 8,false,"
+                                   + " 9,false]");
     }
 
     @Test

@@ -22,13 +22,21 @@ class SudokuField
     public
     SudokuField() {
 
-        this(0);
+        this(0, false);
     }
 
     public
     SudokuField(final int value) {
 
+        this(value, false);
+    }
+
+    public
+    SudokuField(final int value,
+                final boolean isMutable) {
+
         setFieldValue(value);
+        setFieldMutability(isMutable);
     }
 
 
@@ -37,6 +45,12 @@ class SudokuField
     int getFieldValue() {
 
         return value;
+    }
+
+    public
+    boolean getFieldMutability() {
+        
+        return isMutable;
     }
 
     public
@@ -51,6 +65,12 @@ class SudokuField
         }
 
         this.value = value;
+    }
+
+    public
+    void setFieldMutability(final boolean isMutable) {
+
+        this.isMutable = isMutable;
     }
 
 
@@ -77,6 +97,8 @@ class SudokuField
         return new EqualsBuilder()
                    .append(this.value,
                            field.value)
+                   .append(this.isMutable,
+                           field.isMutable)
                    .isEquals();
     }
 
@@ -86,6 +108,7 @@ class SudokuField
 
         return new HashCodeBuilder(11, 17)
                            .append(this.value)
+                           .append(this.isMutable)
                            .toHashCode();
     }
 
@@ -97,6 +120,8 @@ class SudokuField
                                    ToStringStyle.SIMPLE_STYLE)
                            .append("value",
                                    this.value)
+                           .append("isMutable",
+                                   this.isMutable)
                            .toString();
     }
 
@@ -122,13 +147,16 @@ class SudokuField
     protected
     Object clone() {
 
-        return new SudokuField(value);
+        return new SudokuField(value, isMutable);
     }
 
 
     //================================================================ Data ==//
     private
     int value;
+
+    private
+    boolean isMutable;
 
 
 }
