@@ -31,7 +31,7 @@ public class SudokuBoardTest {
         int x = 0, y = 0;
         int expectedResult = 0;
 
-        int actualResult = sudokuBoard.get(x, y);
+        int actualResult = sudokuBoard.get(x, y).getFieldValue();
 
         assertEquals(expectedResult, actualResult);
     }

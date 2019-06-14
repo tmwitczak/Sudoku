@@ -72,7 +72,7 @@ class BacktrackingSudokuSolver
                  j < BOARD_SIZE;
                  j++) {
 
-                if (board.get(i, j) == 0) {
+                if (board.get(i, j).getFieldValue() == 0) {
                     return new Pair<>(i, j);
                 }
             }

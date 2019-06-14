@@ -73,6 +73,7 @@ public class Menu {
         localizeUserInterface(lang);
     }
 
+    public
     static int getLevel() {
         return level;
     }

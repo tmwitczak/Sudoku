@@ -160,7 +160,8 @@ class BacktrackingSudokuSolverTest {
 
             for (int i = 0; i < BOARD_SIZE; i++) {
                 for (int j = 0; j < BOARD_SIZE; j++) {
-                    if (board.get(i, j) == 0) {
+                    if (board.get(i, j)
+                             .getFieldValue() == 0) {
                         return false;
                     }
                 }
@@ -197,7 +198,8 @@ class BacktrackingSudokuSolverTest {
             int[] row = new int[BOARD_SIZE];
 
             for (int i = 0; i < BOARD_SIZE; i++) {
-                row[i] = board.get(n, i);
+                row[i] = board.get(n, i)
+                              .getFieldValue();
             }
 
             return row;
@@ -208,7 +210,7 @@ class BacktrackingSudokuSolverTest {
             int[] column = new int[BOARD_SIZE];
 
             for (int i = 0; i < BOARD_SIZE; i++) {
-                column[i] = board.get(i, n);
+                column[i] = board.get(i, n).getFieldValue();
             }
 
             return column;
@@ -223,7 +225,8 @@ class BacktrackingSudokuSolverTest {
                 for (int l = 0; l < BOX_SIZE; l++) {
                     box[BOX_SIZE * k + l]
                             = board.get(boxCoordinates[0] + k,
-                            boxCoordinates[1] + l);
+                                        boxCoordinates[1] + l)
+                                   .getFieldValue();
                 }
             }
 
