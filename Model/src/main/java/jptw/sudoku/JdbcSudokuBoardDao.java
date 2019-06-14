@@ -149,9 +149,12 @@ class JdbcSudokuBoardDao
     void write(final SudokuBoard sudokuBoard) {
 
         try {
-                writeObjectToDatabase(connection, sudokuBoard);
+
+            writeObjectToDatabase(connection,
+                                  sudokuBoard);
 
         } catch (Exception sqlException) {
+
             sqlException.printStackTrace();
         }
     }
