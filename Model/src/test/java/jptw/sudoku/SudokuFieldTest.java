@@ -201,11 +201,16 @@ class SudokuFieldTest {
         int expectedSudokuFieldValue = 5;
 
         final
-        String expectedToStringValue = "5";
+        boolean expectedSudokuFieldMutability = false;
+
+        final
+        String expectedToStringValue = "5,false";
 
         // When:
         final
-        SudokuField sudokuField = new SudokuField(expectedSudokuFieldValue);
+        SudokuField sudokuField
+                = new SudokuField(expectedSudokuFieldValue,
+                                  expectedSudokuFieldMutability);
 
         // Then:
         assertNotNull(sudokuField.toString());

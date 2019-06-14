@@ -161,36 +161,22 @@ class SudokuBoard
     }
 
     public
-    boolean set(int x,
-                int y,
-                int value) {
+    void set(int x,
+             int y,
+             int value) {
 
         if ((value < 0) || (value > 9)) {
-
             throw new InvalidValueException(Integer.toString(value));
         }
-
-        int oldValue = get(x, y);
 
         board.get(x)
              .set(y,
                   new SudokuField(value));
-
-        if (!checkBoard()) {
-
-            board.get(x)
-                 .set(y,
-                      new SudokuField(oldValue));
-
-            return false;
-        }
-
-        return true;
     }
 
 
     //------------------------------------------------------- Board validation <
-    private
+    public
     boolean checkBoard() {
 
         // Check rows and columns
