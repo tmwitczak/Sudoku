@@ -1,8 +1,21 @@
+///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
 
-public class InvalidArraySizeException extends IllegalArgumentException {
-    public InvalidArraySizeException(String message) {
+//////////////////////////////////////////// Class: InvalidArraySizeException //
+public
+class InvalidArraySizeException
+    extends IllegalArgumentException {
+
+    //=========================================================== Behaviour ==//
+    //------------------------------------------------------ Constructors --==//
+    public
+    InvalidArraySizeException(final String message) {
+
         super(message);
     }
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+

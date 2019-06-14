@@ -1,5 +1,8 @@
+///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
+
+///////////////////////////////////////////////////////////////////// Imports //
 import org.apache.commons.lang3.SerializationUtils;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -7,23 +10,34 @@ import java.io.*;
 import java.sql.*;
 import java.util.Arrays;
 
-public class JdbcSudokuBoardDao
-        implements Dao<SudokuBoard>,
-        AutoCloseable {
 
+/////////////////////////////////////////////////// Class: JdbcSudokuBoardDao //
+public
+class JdbcSudokuBoardDao
+        implements AutoCloseable,
+                   Dao<SudokuBoard> {
+
+    //=========================================================== Behaviour ==//
+    //------------------------------------------------------ Constructors --==//
     JdbcSudokuBoardDao(final String id) {
+
         this.id = id;
     }
 
+
+    //------------------------ Interface implementation: Dao<SudokuBoard> --==//
     @Override
-    public SudokuBoard read() {
+    public
+    SudokuBoard read() {
 
         try {
-            Connection connection = connectToDerbyDatabase();
+            Connection connection
+                = connectToDerbyDatabase();
 
             PreparedStatement pstmt = connection
-                    .prepareStatement("select object from " +
-                            "sudoku_boards where id = ?");
+                                      .prepareStatement("select object from "
+                                                        + "sudoku_boards where "
+                                                        + " id = ?");
             pstmt.setString(1, id);
 
             ResultSet resultSet = pstmt.executeQuery();
@@ -32,7 +46,7 @@ public class JdbcSudokuBoardDao
 
             Blob blob = resultSet.getBlob(1);
             InputStream byte_stream = blob.getBinaryStream();
-            byte [] byte_array = new byte [4096];
+            byte[] byte_array = new byte[4096];
             int bytes_read = byte_stream.read(byte_array);
             byte[] bytes_better = Arrays.copyOfRange(byte_array, 0, bytes_read);
             Object deSerializedObject =
@@ -47,59 +61,64 @@ public class JdbcSudokuBoardDao
             return (SudokuBoard) deSerializedObject;
 
         } catch (SQLException sqlException) {
+            
             sqlException.printStackTrace();
+
         } catch (IOException e) {
+
             e.printStackTrace();
         }
 
         return null;
     }
 
-    private Connection connectToDerbyDatabase()
+    private
+    Connection connectToDerbyDatabase()
             throws SQLException {
 
-        return DriverManager.getConnection(
-                "jdbc:derby://localhost:1527/" + "sudokuDatabase"
-                        + ";create=true");
+        return DriverManager
+               .getConnection("jdbc:derby://localhost:1527/"
+                              + "sudokuDatabase"
+                              + ";create=true");
     }
 
-    private boolean checkIfDatabaseHasAlreadyBeenCreated(
-            final Connection connection)
+    private
+    boolean checkIfDatabaseHasAlreadyBeenCreated(final Connection connection)
             throws SQLException {
 
         DatabaseMetaData databaseMetaData
-            = connection.getMetaData();
+                = connection.getMetaData();
 
         ResultSet tables
-            = databaseMetaData.getTables(
-                connection.getCatalog(),
-                null,
-                null,
-                null);
+                = databaseMetaData.getTables(connection.getCatalog(),
+                                             null,
+                                             null,
+                                             null);
 
         return tables.next();
     }
 
-    private void createTableForSudokuBoards(final Connection connection)
+    private
+    void createTableForSudokuBoards(final Connection connection)
             throws SQLException {
 
-        connection.createStatement().execute(
-                "create table sudoku_boards" +
-                "(" +
-                "    id varchar(30) not null" +
-                "        constraint primary_key_sudoku_boards_id" +
-                "            primary key," +
-                "" +
-                "    name varchar(30)," +
-                "" +
-                "    object blob not null" +
-                "" +
-                ")"
-        );
+        connection.createStatement()
+                  .execute("create table sudoku_boards"
+                           + "("
+                           + "    id varchar(30) not null"
+                           + "        constraint primary_key_sudoku_boards_id"
+                           + "            primary key,"
+                           + ""
+                           + "    name varchar(30),"
+                           + ""
+                           + "    object blob not null"
+                           + ""
+                           + ")");
     }
 
-    private void writeObjectToDatabase(final Connection connection,
-                                       final Object obj)
+    private
+    void writeObjectToDatabase(final Connection connection,
+                               final Object obj)
             throws SQLException {
 
         PreparedStatement preparedStatement
@@ -117,7 +136,8 @@ public class JdbcSudokuBoardDao
     }
 
     @Override
-    public void write(final SudokuBoard sudokuBoard) {
+    public
+    void write(final SudokuBoard sudokuBoard) {
 
         try {
             Connection connection
@@ -137,9 +157,19 @@ public class JdbcSudokuBoardDao
     }
 
     @Override
-    public void close() {
+    public
+    void close() {
 
     }
 
-    private final String id;
+
+    //================================================================ Data ==//
+    private
+    final String id;
+
+
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+

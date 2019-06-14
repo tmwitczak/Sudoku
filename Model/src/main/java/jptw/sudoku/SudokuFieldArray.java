@@ -1,8 +1,8 @@
-//////////////////////////////////////////////////////////////////////// Package
+///////////////////////////////////////////////////////////////////// Package //
 package jptw.sudoku;
 
-//////////////////////////////////////////////////////////////////////// Imports
 
+///////////////////////////////////////////////////////////////////// Imports //
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -12,34 +12,45 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-/////////////////////////////////////////////////////////////// Class definition
-class SudokuFieldArray implements Serializable, Cloneable {
 
-    ////////////////////////////////////////////////////////////////// [Methods]
-    //----------------------------------------------------------- Constructors <
+///////////////////////////////////////////////////// Class: SudokuFieldArray //
+class SudokuFieldArray
+        implements Cloneable,
+                   Serializable {
+
+    //=========================================================== Behaviour ==//
+    //------------------------------------------------------ Constructors --==//
     SudokuFieldArray(final List<SudokuField> fields) {
 
         if (fields.size() != NUMBER_OF_FIELDS) {
-            throw new InvalidArraySizeException(
-                    "fields should contain 9 elements!");
+            throw new InvalidArraySizeException("fields should contain"
+                                                + " 9 elements!");
         }
 
-        this.sudokuFields = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
+        this.sudokuFields
+                = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
 
-        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
-            this.sudokuFields.set(i, fields.get(i));
+        for (int i = 0;
+             i < NUMBER_OF_FIELDS;
+             i++) {
+
+            this.sudokuFields.set(i,
+                                  fields.get(i));
         }
-
     }
 
     SudokuFieldArray(final SudokuFieldArray object) {
 
-        this.sudokuFields = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
+        this.sudokuFields
+                = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
 
-        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
-            this.sudokuFields.set(i, object.sudokuFields.get(i));
+        for (int i = 0;
+             i < NUMBER_OF_FIELDS;
+             i++) {
+
+            this.sudokuFields.set(i,
+                                  object.sudokuFields.get(i));
         }
-
     }
 
     //----------------------------------------------------------- Verification <
@@ -49,20 +60,35 @@ class SudokuFieldArray implements Serializable, Cloneable {
     }
 
     //------------------------------------------------------- Helper functions <
-    private boolean checkForDuplicatesWhileIgnoringZeros(
+    private
+    boolean checkForDuplicatesWhileIgnoringZeros(
             final List<SudokuField> fields) {
 
-        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
-            if (fields.get(i).getFieldValue() != 0) {
-                for (int j = i + 1; j < NUMBER_OF_FIELDS; j++) {
-                    if (fields.get(j).getFieldValue() != 0) {
-                        if (fields.get(i).getFieldValue() == fields.get(j).getFieldValue()) {
+        for (int i = 0;
+             i < NUMBER_OF_FIELDS;
+             i++) {
+
+            if (fields.get(i)
+                      .getFieldValue() != 0) {
+
+                for (int j = i + 1;
+                     j < NUMBER_OF_FIELDS;
+                     j++) {
+
+                    if (fields.get(j)
+                              .getFieldValue() != 0) {
+
+                        if (fields.get(i)
+                                  .getFieldValue() == fields.get(j)
+                                                            .getFieldValue()) {
+
                             return true;
                         }
                     }
                 }
             }
         }
+
         return false;
     }
 
@@ -98,8 +124,12 @@ class SudokuFieldArray implements Serializable, Cloneable {
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]
-    private List<SudokuField> sudokuFields;
-    private static final int NUMBER_OF_FIELDS = 9;
+    private
+    List<SudokuField> sudokuFields;
+
+    private static final
+    int NUMBER_OF_FIELDS
+            = 9;
 
 }
 

@@ -1,9 +1,8 @@
-////////////////////////////////////////////////////////////////////// | Package
+///////////////////////////////////////////////////////////////////// Package //
 package sudoku;
 
 
-////////////////////////////////////////////////////////////////////// | Imports
-
+///////////////////////////////////////////////////////////////////// Imports //
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -34,22 +33,34 @@ import java.util.logging.*;
 import java.util.regex.Pattern;
 
 
-///////////////////////////////////////////////////////////////// | Class: Board
-public class Board {
+//////////////////////////////////////////////////////////////// Class: Board //
+public
+class Board {
 
+    private static final
+    Logger logger
+            = Logger.getLogger(Board.class
+                                    .getName());
 
-    private static final Logger logger = Logger.getLogger(Board.class.getName());
+    //=========================================================== Behaviour ==//
+    //-------------------------------------------------------------- FXML --==//
+    private
+    void localizeUserInterface
+            (final String lang)
+            throws IOException {
 
-    //============================================================ | Behaviour <
-    //---------------------------------------------------------------- | FXML <<
-    private void localizeUserInterface(final String lang) throws IOException {
-        InputStream inputStream =
-                getClass().getClassLoader().getResourceAsStream(
-                        "sudoku/Localization_" + lang + ".properties");
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream,
-                StandardCharsets.UTF_8);
+        InputStream inputStream
+                = getClass().getClassLoader()
+                            .getResourceAsStream("sudoku/Localization_"
+                                                 + lang
+                                                 + ".properties");
 
-        resourceBundleMenu = new PropertyResourceBundle(inputStreamReader);
+        InputStreamReader inputStreamReader
+            = new InputStreamReader(inputStream,
+                                    StandardCharsets.UTF_8);
+
+        resourceBundleMenu
+                = new PropertyResourceBundle(inputStreamReader);
 
         buttonLoad.setText(resourceBundleMenu.getString("load"));
         buttonSave.setText(resourceBundleMenu.getString("save"));
@@ -58,15 +69,21 @@ public class Board {
         //Use try-with-resource to get auto-closeable writer instance
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(
                 "localization-language"))) {
+
             writer.write(lang);
-        }catch (IOException e)
-        {
-         throw new FileException(e);
+
+        } catch (IOException e) {
+
+            throw new FileException(e);
         }
     }
 
     @FXML
-    private void initialize() throws IOException {
+    private
+    void initialize
+            ()
+            throws IOException {
+
         backtrackingSudokuSolver.solve(sudokuBoard);
         difficultyLevel.modifySudokuBoard(sudokuBoard, Menu.getLevel());
         createTextFieldsForSudokuBoard();
@@ -215,29 +232,50 @@ public class Board {
 
     }
 
-    //================================================================= | Data <
-    //---------------------------------------------------------------- | FXML <<
-    @FXML private GridPane grid;
-
-    @FXML private Button buttonVerify;
-
-    @FXML private Button buttonSave;
-
-    @FXML private Button buttonLoad;
+    //================================================================ Data ==//
+    //-------------------------------------------------------------- FXML --==//
+    @FXML
+    private
+    GridPane grid;
 
     @FXML
-    private Label labelIsCorrect;
+    private
+    Button buttonVerify;
+
+    @FXML
+    private
+    Button buttonSave;
+
+    @FXML
+    private
+    Button buttonLoad;
+
+    @FXML
+    private
+    Label labelIsCorrect;
 
     ResourceBundle resourceBundleMenu;
 
-    //--------------------------------------------------------- | SudokuBoard <<
-    private TextField[][] textFields;
-    private SudokuBoard sudokuBoard = new SudokuBoard();
-    private BacktrackingSudokuSolver backtrackingSudokuSolver
+
+    //------------------------------------------------------- SudokuBoard --==//
+    private
+    TextField[][] textFields;
+
+    private
+    SudokuBoard sudokuBoard
+            = new SudokuBoard();
+
+    private
+    BacktrackingSudokuSolver backtrackingSudokuSolver
             = new BacktrackingSudokuSolver();
-    private DifficultyLevel difficultyLevel = new DifficultyLevel();
+
+    private
+    DifficultyLevel difficultyLevel
+            = new DifficultyLevel();
 
 
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
+
