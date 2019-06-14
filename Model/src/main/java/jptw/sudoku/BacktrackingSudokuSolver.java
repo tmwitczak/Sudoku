@@ -12,14 +12,13 @@ import java.util.Collections;
 ///////////////////////////////////////////// Class: BacktrackingSudokuSolver //
 public
 class BacktrackingSudokuSolver
-	implements SudokuSolver {
+    implements SudokuSolver {
 
     //=========================================================== Behaviour ==//
     //-------------------------------------------------------------- Main --==//
     @Override
     public
-    boolean solve
-            (final SudokuBoard board) {
+    boolean solve(final SudokuBoard board) {
 
         Pair<Integer, Integer> emptyFieldCoordinates
                 = findEmptyField(board);
@@ -61,8 +60,7 @@ class BacktrackingSudokuSolver
 
     //-------------------------------------------------- Helper functions --==//
     private
-    Pair<Integer, Integer> findEmptyField
-            (final SudokuBoard board) {
+    Pair<Integer, Integer> findEmptyField(final SudokuBoard board) {
 
         for (int i = 0;
              i < BOARD_SIZE;
@@ -82,8 +80,7 @@ class BacktrackingSudokuSolver
     }
 
     private
-    ArrayList<Integer> generateRandomSudokuNumbers
-            () {
+    ArrayList<Integer> generateRandomSudokuNumbers() {
 
         ArrayList<Integer> randomSudokuNumbers
                 = new ArrayList<>();

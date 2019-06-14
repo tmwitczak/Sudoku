@@ -15,16 +15,14 @@ class FileSudokuBoardDao
     //=========================================================== Behaviour ==//
     //------------------------------------------------------ Constructors --==//
     public
-    FileSudokuBoardDao
-            (final String filename) {
+    FileSudokuBoardDao(final String filename) {
 
         this.filename = filename;
     }
 
 
     public
-    void finalize
-            ()
+    void finalize()
             throws Exception {
 
         close();
@@ -34,8 +32,7 @@ class FileSudokuBoardDao
     //--------------------------- Interface implementation: AutoCloseable --==//
     @Override
     public
-    void close
-            ()
+    void close()
             throws Exception {
     }
 
@@ -43,8 +40,7 @@ class FileSudokuBoardDao
     //------------------------ Interface implementation: Dao<SudokuBoard> --==//
     @Override
     public
-    SudokuBoard read
-            ()
+    SudokuBoard read()
             throws FileException {
 
         SudokuBoard sudokuBoard
@@ -71,8 +67,7 @@ class FileSudokuBoardDao
 
     @Override
     public
-    void write
-            (final SudokuBoard obj)
+    void write(final SudokuBoard obj)
             throws FileException {
 
         try (FileOutputStream fileOutputStream

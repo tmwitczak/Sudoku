@@ -7,12 +7,10 @@ public
 interface Dao<T> {
 
     //=========================================================== Behaviour ==//
-    T read
-            ()
+    T read()
         throws FileException;
     
-    void write
-            (T obj)
+    void write(T obj)
         throws FileException;
 
 

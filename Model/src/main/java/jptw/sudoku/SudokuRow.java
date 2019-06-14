@@ -12,15 +12,14 @@ class SudokuRow
 
     //=========================================================== Behaviour ==//
     //------------------------------------------------------ Constructors --==//
-    SudokuRow
-            (final List<SudokuField> fields) {
+    SudokuRow(final List<SudokuField> fields) {
 
         super(fields);
     }
 
 
 }
-j
+
 
 ////////////////////////////////////////////////////////////////////////////////
 

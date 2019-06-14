@@ -19,8 +19,7 @@ class JdbcSudokuBoardDao
 
     //=========================================================== Behaviour ==//
     //------------------------------------------------------ Constructors --==//
-    JdbcSudokuBoardDao
-            (final String id) {
+    JdbcSudokuBoardDao(final String id) {
 
         this.id = id;
     }
@@ -47,7 +46,7 @@ class JdbcSudokuBoardDao
 
             Blob blob = resultSet.getBlob(1);
             InputStream byte_stream = blob.getBinaryStream();
-            byte [] byte_array = new byte [4096];
+            byte[] byte_array = new byte[4096];
             int bytes_read = byte_stream.read(byte_array);
             byte[] bytes_better = Arrays.copyOfRange(byte_array, 0, bytes_read);
             Object deSerializedObject =
@@ -74,8 +73,7 @@ class JdbcSudokuBoardDao
     }
 
     private
-    Connection connectToDerbyDatabase
-            ()
+    Connection connectToDerbyDatabase()
             throws SQLException {
 
         return DriverManager
@@ -85,8 +83,7 @@ class JdbcSudokuBoardDao
     }
 
     private
-    boolean checkIfDatabaseHasAlreadyBeenCreated
-            (final Connection connection)
+    boolean checkIfDatabaseHasAlreadyBeenCreated(final Connection connection)
             throws SQLException {
 
         DatabaseMetaData databaseMetaData
@@ -102,8 +99,7 @@ class JdbcSudokuBoardDao
     }
 
     private
-    void createTableForSudokuBoards
-            (final Connection connection)
+    void createTableForSudokuBoards(final Connection connection)
             throws SQLException {
 
         connection.createStatement()
@@ -121,9 +117,8 @@ class JdbcSudokuBoardDao
     }
 
     private
-    void writeObjectToDatabase
-            (final Connection connection,
-             final Object obj)
+    void writeObjectToDatabase(final Connection connection,
+                               final Object obj)
             throws SQLException {
 
         PreparedStatement preparedStatement
@@ -142,8 +137,7 @@ class JdbcSudokuBoardDao
 
     @Override
     public
-    void write
-            (final SudokuBoard sudokuBoard) {
+    void write(final SudokuBoard sudokuBoard) {
 
         try {
             Connection connection

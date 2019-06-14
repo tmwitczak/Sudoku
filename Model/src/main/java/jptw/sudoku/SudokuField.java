@@ -20,15 +20,13 @@ class SudokuField
     //=========================================================== Behaviour ==//
     //------------------------------------------------------ Constructors --==//
     public
-    SudokuField
-            () {
+    SudokuField() {
 
         this(0);
     }
 
     public
-    SudokuField
-            (final int value) {
+    SudokuField(final int value) {
 
         setFieldValue(value);
     }
@@ -36,18 +34,15 @@ class SudokuField
 
     //-------------------------------------------------------------- Accessors <
     public
-    int getFieldValue
-            () {
+    int getFieldValue() {
 
         return value;
     }
 
     public
-    void setFieldValue
-            (final int value) {
+    void setFieldValue(final int value) {
 
-        if (   value < 0
-            || value > 9) {
+        if ((value < 0) || (value > 9)) {
 
             throw new InvalidValueException("value: "
                                             + value
@@ -62,16 +57,16 @@ class SudokuField
     //-------------------------------------------------------- Comparison --==//
     @Override
     public
-    boolean equals
-            (final Object object) {
+    boolean equals(final Object object) {
 
         if (object == this) {
 
             return true;
         }
 
-        if (   object            == null
-            || object.getClass() != getClass()) {
+        if ((object == null)
+            ||
+            (object.getClass() != getClass())) {
 
             return false;
         }
@@ -87,30 +82,27 @@ class SudokuField
 
     @Override
     public
-    int hashCode
-            () {
+    int hashCode() {
 
         return new HashCodeBuilder(11, 17)
-                   .append(this.value)
-                   .toHashCode();
+                           .append(this.value)
+                           .toHashCode();
     }
 
     @Override
     public
-    String toString
-            () {
+    String toString() {
 
         return new ToStringBuilder(this,
                                    ToStringStyle.SIMPLE_STYLE)
-                   .append("value",
-                           this.value)
-                   .toString();
+                           .append("value",
+                                   this.value)
+                           .toString();
     }
 
     @Override
     public
-    int compareTo
-            (final SudokuField o) {
+    int compareTo(final SudokuField o) {
 
         if (this.getFieldValue() == o.getFieldValue()) {
 
@@ -128,8 +120,7 @@ class SudokuField
 
     @Override
     protected
-    Object clone
-            () {
+    Object clone() {
 
         return new SudokuField(value);
     }

@@ -9,10 +9,9 @@ import java.io.IOException;
 //////////////////////////////////////////////////////// Class: FileException //
 public
 class FileException
-	extends IOException {
+    extends IOException {
 
-    public FileException
-	    (Throwable cause) {
+    public FileException(final Throwable cause) {
 
         super(cause);
     }

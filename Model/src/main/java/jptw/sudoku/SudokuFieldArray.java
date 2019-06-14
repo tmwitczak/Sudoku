@@ -20,8 +20,7 @@ class SudokuFieldArray
 
     //=========================================================== Behaviour ==//
     //------------------------------------------------------ Constructors --==//
-    SudokuFieldArray
-            (final List<SudokuField> fields) {
+    SudokuFieldArray(final List<SudokuField> fields) {
 
         if (fields.size() != NUMBER_OF_FIELDS) {
             throw new InvalidArraySizeException("fields should contain"
@@ -40,8 +39,7 @@ class SudokuFieldArray
         }
     }
 
-    SudokuFieldArray
-            (final SudokuFieldArray object) {
+    SudokuFieldArray(final SudokuFieldArray object) {
 
         this.sudokuFields
                 = Arrays.asList(new SudokuField[NUMBER_OF_FIELDS]);
@@ -56,16 +54,15 @@ class SudokuFieldArray
     }
 
     //----------------------------------------------------------- Verification <
-    boolean verify
-            () {
+    boolean verify() {
 
         return !checkForDuplicatesWhileIgnoringZeros(sudokuFields);
     }
 
     //------------------------------------------------------- Helper functions <
     private
-    boolean checkForDuplicatesWhileIgnoringZeros
-            (final List<SudokuField> fields) {
+    boolean checkForDuplicatesWhileIgnoringZeros(
+            final List<SudokuField> fields) {
 
         for (int i = 0;
              i < NUMBER_OF_FIELDS;
@@ -127,8 +124,12 @@ class SudokuFieldArray
     }
 
     /////////////////////////////////////////////////////////////////// [Fields]
-    private List<SudokuField> sudokuFields;
-    private static final int NUMBER_OF_FIELDS = 9;
+    private
+    List<SudokuField> sudokuFields;
+
+    private static final
+    int NUMBER_OF_FIELDS
+            = 9;
 
 }
 

@@ -12,8 +12,7 @@ class SudokuBox
 
     //=========================================================== Behaviour ==//
     //------------------------------------------------------ Constructors --==//
-    SudokuBox
-            (final List<SudokuField> sudokuFields) {
+    SudokuBox(final List<SudokuField> sudokuFields) {
 
         super(sudokuFields);
     }

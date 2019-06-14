@@ -8,8 +8,7 @@ interface SudokuSolver {
 
     //=========================================================== Behaviour ==//
     //-------------------------------------------------------------- Main --==//
-    boolean solve
-            (SudokuBoard board);
+    boolean solve(SudokuBoard board);
 
 
 }
