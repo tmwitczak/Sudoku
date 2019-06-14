@@ -46,8 +46,8 @@ class SudokuField
 
             throw new InvalidValueException("value: "
                                             + value
-                                            + " should be within the range:"
-                                              + "of [0, 9]!");
+                                            + " should be within the range"
+                                              + " of [0, 9]!");
         }
 
         this.value = value;
