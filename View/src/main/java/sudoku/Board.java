@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.converter.CharacterStringConverter;
 import jptw.sudoku.BacktrackingSudokuSolver;
 import jptw.sudoku.Dao;
@@ -96,7 +97,7 @@ class Board {
     private void onActionButtonSave(final ActionEvent actionEvent)
             throws IOException {
 
-        onActionButtonVerify(actionEvent);
+        //onActionButtonVerify(actionEvent);
 
         TextInputDialog dialog = new TextInputDialog(null);
         dialog.setTitle("Save Sudoku Board");
@@ -105,19 +106,18 @@ class Board {
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            System.out.println("Your name: " + result.get());
-        }
 
-        try (Dao<SudokuBoard> jdbcSudokuBoardDao
-                     = (new SudokuBoardDaoFactory())
-                               .getJdbcDao(result.get())) {
+            try (Dao<SudokuBoard> jdbcSudokuBoardDao
+                         = (new SudokuBoardDaoFactory())
+                    .getJdbcDao(result.get())) {
 
-            jdbcSudokuBoardDao.write(sudokuBoard);
-            logger.log(Level.INFO, "Board saved");
+                jdbcSudokuBoardDao.write(sudokuBoard);
+                logger.log(Level.INFO, "Board saved");
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            logger.log(Level.WARNING, "Failed to save board", exception);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                logger.log(Level.WARNING, "Failed to save board", exception);
+            }
         }
     }
 
@@ -126,43 +126,52 @@ class Board {
             throws IOException {
 
         TextInputDialog dialog = new TextInputDialog(null);
-        dialog.setTitle("Save Sudoku Board");
+        dialog.setTitle("Load Sudoku Board");
         dialog.setHeaderText(null);
         dialog.setContentText("Enter sudoku name: ");
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            System.out.println("Your name: " + result.get());
+
+            try (Dao<SudokuBoard> jdbcSudokuBoardDao
+                         = (new SudokuBoardDaoFactory())
+                    .getJdbcDao(result.get())) {
+                sudokuBoard = jdbcSudokuBoardDao.read();
+                if (sudokuBoard != null) {
+                    logger.log(Level.INFO, "Board loaded");
+
+                    createTextFieldsForSudokuBoard();
+                    labelIsCorrect.setText("");
+
+                    return;
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+            logger.log(Level.WARNING, "Failed to load board: ");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Load Sudoku Board Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Sudoku Board: " + result.get()
+                    + " doesn't exist and couldn't be loaded!");
+
+            alert.showAndWait();
         }
 
-        try (Dao<SudokuBoard> jdbcSudokuBoardDao
-                     = (new SudokuBoardDaoFactory())
-                               .getJdbcDao(result.get())) {
-            sudokuBoard = jdbcSudokuBoardDao.read();
-            logger.log(Level.INFO, "Board loaded");
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            logger.log(Level.WARNING, "Failed to load board", exception);
-        }
-
-        createTextFieldsForSudokuBoard();
     }
 
     @FXML
     private void onActionButtonVerify(final ActionEvent actionEvent)
             throws IOException {
-        boolean isCorrect = true;
+        boolean isCorrect = sudokuBoard.checkBoard();
+
+        boolean win = true;
         for (int i = 0; i < SudokuBoard.BOARD_SIZE; i++) {
             for (int j = 0; j < SudokuBoard.BOARD_SIZE; j++) {
-                if (!textFields[i][j].isDisabled()) {
-                    String content = textFields[i][j].getText();
-
-                    if (!content.isEmpty()) {
-                        System.out.println(content);
-                        sudokuBoard.set(i, j,
-                                content.charAt(0) - '0');
-                        isCorrect &= sudokuBoard.checkBoard();
-                    }
+                if (sudokuBoard.get(i, j).getFieldValue() == 0) {
+                    win = false;
                 }
             }
         }
@@ -174,30 +183,20 @@ class Board {
             labelIsCorrect.setText(resourceBundleMenu.getString("notCorrect"));
             logger.log(Level.INFO, "Board verification: NotCorrect");
         }
+
+        if (win) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Win");
+            alert.setHeaderText("Congratulations!");
+            alert.setContentText("You won!");
+
+            alert.showAndWait();
+
+            ((Stage) grid.getScene().getWindow()).close();
+        }
     }
 
     private void createTextFieldsForSudokuBoard() {
-
-
-//        TextFormatter textFormatter = new TextFormatter<>(c -> {
-//            if (c.isContentChange()) {
-//                if (c.getControlNewText().length() == 0) {
-//                    return c;
-//                }
-//                try {
-//                    Integer.parseInt(c.getControlNewText());
-//                    return c;
-//                } catch (NumberFormatException e) {
-//                }
-//                return null;
-//
-//            }
-//            return c;
-//        });
-
-//        textFormatter.valueProperty().addListener((obs, oldValue, newValue) -> {
-//            System.out.println("New double value " + newValue);
-//        });
 
         textFields = new TextField[9][9];
 
@@ -214,7 +213,7 @@ class Board {
                         = new TextFormatter<>(new CharacterStringConverter() {},
                                               null,
                                               change -> {
-                                                  
+
                     String newText = change.getControlNewText();
 
                     if (validNewText.matcher(newText).matches()) {
@@ -231,14 +230,19 @@ class Board {
                 final int y = j;
 
                 textField.setTextFormatter(textFormatter);
-                textField.setOnAction(event -> {
-                    sudokuBoard.set(x, y,
-                                    (((TextField) event.getSource())
+                textField.setOnKeyReleased(event -> {
+                    int value;
+                    try {
+                        value = (((TextField) event.getSource())
                                             .getText()
-                                            .charAt(0) - '0'));
+                                            .charAt(0) - '0');
+                        sudokuBoard.set(x, y, value);
+                    } catch(Exception e) {
+                        sudokuBoard.set(x, y, 0);
+                    }
                     logger.log(Level.INFO, "Setting (" + x + ", " + y + ") "
-                               + "sudoku field to value: "
-                               + sudokuBoard.get(x, y).getFieldValue());
+                            + "sudoku field to value: "
+                            + sudokuBoard.get(x, y).getFieldValue());
                 });
                 textField.setMaxSize(60, 60);
                 //textField.setFont(Font.font(20));
@@ -247,6 +251,8 @@ class Board {
                 if (sudokuBoard.get(i, j).getFieldValue() != 0) {
                     textField.setDisable(!sudokuBoard.get(i, j).getFieldMutability());
                     textField.setText(String.valueOf(sudokuBoard.get(i, j).getFieldValue()));
+                } else {
+                    textField.setText(" ");
                 }
                 grid.add(textField, j, i);
             }

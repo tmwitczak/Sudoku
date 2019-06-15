@@ -68,11 +68,11 @@ class JdbcSudokuBoardDao
 
         } catch (SQLException sqlException) {
 
-            sqlException.printStackTrace();
+            //sqlException.printStackTrace();
 
         } catch (Exception e) {
 
-            e.printStackTrace();
+            //e.printStackTrace();
 }
         return null;
     }
@@ -154,7 +154,7 @@ class JdbcSudokuBoardDao
 
         } catch (Exception sqlException) {
 
-            sqlException.printStackTrace();
+            //sqlException.printStackTrace();
         }
     }
 
