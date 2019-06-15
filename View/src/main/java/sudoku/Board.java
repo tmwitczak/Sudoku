@@ -211,10 +211,12 @@ class Board {
 
                 Pattern validNewText = Pattern.compile("[1-9 ]");
                 TextFormatter textFormatter
-                        = new TextFormatter<>(new CharacterStringConverter() {
-                },
-                        null, change -> {
+                        = new TextFormatter<>(new CharacterStringConverter() {},
+                                              null,
+                                              change -> {
+                                                  
                     String newText = change.getControlNewText();
+
                     if (validNewText.matcher(newText).matches()) {
                         return change;
                     } else {
@@ -224,7 +226,20 @@ class Board {
 
                 TextField textField = new TextField();
                 textFields[i][j] = textField;
+
+                final int x = i;
+                final int y = j;
+
                 textField.setTextFormatter(textFormatter);
+                textField.setOnAction(event -> {
+                    sudokuBoard.set(x, y,
+                                    (((TextField) event.getSource())
+                                            .getText()
+                                            .charAt(0) - '0'));
+                    logger.log(Level.INFO, "Setting (" + x + ", " + y + ") "
+                               + "sudoku field to value: "
+                               + sudokuBoard.get(x, y).getFieldValue());
+                });
                 textField.setMaxSize(60, 60);
                 //textField.setFont(Font.font(20));
                 textField.pseudoClassStateChanged(PseudoClass.getPseudoClass(
