@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@sudoku.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.Board">
+<Pane maxHeight="800.0" maxWidth="1280.0" minHeight="800.0" minWidth="1280.0" prefHeight="800.0" prefWidth="1280.0" stylesheets="@sudoku.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.Board">
     <children>
-        <GridPane fx:id="grid" alignment="CENTER" layoutX="40.0" layoutY="113.0" prefHeight="600.0" prefWidth="600.0" styleClass="sudoku-board">
+        <GridPane fx:id="grid" alignment="CENTER" layoutX="40.0" layoutY="111.0" prefHeight="600.0" prefWidth="600.0" styleClass="sudoku-board">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -34,9 +34,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-      <Button fx:id="buttonVerify" layoutX="934.0" layoutY="388.0" mnemonicParsing="false" onAction="#onActionButtonVerify" text="Verify" />
-      <Label fx:id="labelIsCorrect" layoutX="838.0" layoutY="296.0" />
-      <Button fx:id="buttonSave" layoutX="937.0" layoutY="510.0" mnemonicParsing="false" onAction="#onActionButtonSave" text="Save" />
-      <Button fx:id="buttonLoad" layoutX="936.0" layoutY="611.0" mnemonicParsing="false" onAction="#onActionButtonLoad" text="Load" />
+      <Button fx:id="buttonVerify" layoutX="709.0" layoutY="224.0" mnemonicParsing="false" onAction="#onActionButtonVerify" prefHeight="78.0" prefWidth="490.0" text="Verify" />
+      <Label fx:id="labelIsCorrect" layoutX="40.0" layoutY="52.0" prefHeight="30.0" prefWidth="600.0" styleClass="label-verify" />
+      <Button fx:id="buttonSave" layoutX="709.0" layoutY="361.0" mnemonicParsing="false" onAction="#onActionButtonSave" prefHeight="78.0" prefWidth="490.0" text="Save" />
+      <Button fx:id="buttonLoad" layoutX="709.0" layoutY="498.0" mnemonicParsing="false" onAction="#onActionButtonLoad" prefHeight="78.0" prefWidth="490.0" text="Load" />
     </children>
 </Pane>
