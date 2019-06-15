@@ -5,7 +5,14 @@ package sudoku;
 ////////////////////////////////////////////////////////////////////// | Imports
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -38,7 +45,7 @@ public class Menu {
                 resourceBundleMenu.getString("difficultyMedium"),
                 resourceBundleMenu.getString("difficultyHard"));
         chooseLevel.getSelectionModel().selectFirst();
-        textFieldDifficulty.setText(resourceBundleMenu.getString("difficulty"));
+        labelDifficulty.setText(resourceBundleMenu.getString("difficulty"));
 
         menuBar.getMenus().get(0).setText(resourceBundleMenu.getString(
                 "localization"));
@@ -85,6 +92,7 @@ public class Menu {
 
     }
 
+
     @FXML
     private void onActionPolish(final ActionEvent actionEvent)
             throws IOException {
@@ -124,7 +132,7 @@ public class Menu {
     private ComboBox<String> chooseLevel;
 
     @FXML
-    private TextField textFieldDifficulty;
+    private Label labelDifficulty;
 
     private static int level;
 
