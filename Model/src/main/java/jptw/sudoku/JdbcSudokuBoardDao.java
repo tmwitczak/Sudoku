@@ -4,10 +4,9 @@ package jptw.sudoku;
 
 ///////////////////////////////////////////////////////////////////// Imports //
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.derby.impl.drda.memCheck;
 
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.*;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Arrays;
 
@@ -30,7 +29,7 @@ class JdbcSudokuBoardDao
                 // Add checking for table existence
             }
 
-        
+
     }
 
 
@@ -68,7 +67,7 @@ class JdbcSudokuBoardDao
             return (SudokuBoard) deSerializedObject;
 
         } catch (SQLException sqlException) {
-            
+
             sqlException.printStackTrace();
 
         } catch (Exception e) {
@@ -81,7 +80,7 @@ class JdbcSudokuBoardDao
     private
     Connection connectToDerbyDatabase()
             throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-                
+
         Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
         return DriverManager.getConnection(jdbcDerbyConnectionPrompt);
@@ -173,13 +172,13 @@ class JdbcSudokuBoardDao
 
     private static final
     String databaseName = "sudokuGameDatabase";
-    
+
     private static final
     String jdbcDerbyConnectionPrompt = "jdbc:derby:"
-                                        + databaseName 
+                                        + databaseName
                                         + ";create=true";
 
-    private final 
+    private final
     String sudokuBoardId;
 
 

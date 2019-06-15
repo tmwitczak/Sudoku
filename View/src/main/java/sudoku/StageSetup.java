@@ -3,17 +3,12 @@ package sudoku;
 
 
 ////////////////////////////////////////////////////////////////////// | Imports
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.logging.*;
 
 
 //////////////////////////////////////////////////////////// | Class: StageSetup

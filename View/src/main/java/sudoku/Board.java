@@ -5,12 +5,13 @@ package sudoku;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
 import javafx.util.converter.CharacterStringConverter;
-import jptw.sudoku.*;
+import jptw.sudoku.BacktrackingSudokuSolver;
+import jptw.sudoku.Dao;
+import jptw.sudoku.SudokuBoard;
+import jptw.sudoku.SudokuBoardDaoFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
