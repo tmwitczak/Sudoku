@@ -33,6 +33,7 @@ public class StageSetup {
             throws IOException {
         stage.setScene(new Scene(loadFxml(filePath)));
         stage.sizeToScene();
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -42,8 +43,14 @@ public class StageSetup {
             throws IOException {
         setStage(stage);
         stage.setScene(new Scene(loadFxml(filePath)));
+
+        stage.getScene().getStylesheets().add(
+                "https://fonts.googleapis.com/css?family="
+                + "Montserrat&display=swap");
+
         stage.setTitle(title);
         stage.sizeToScene();
+        stage.setResizable(false);
         stage.show();
     }
 
