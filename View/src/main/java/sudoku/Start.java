@@ -6,20 +6,21 @@ package sudoku;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 //////////////////////////////////////////////////////////////// Class: Start //
 public
 class Start
         extends Application {
 
-//    static {
-//        String configPath = Start.class.getClassLoader().getResource("./resources/sudoku/loggerConfig.properties").getFile();
-//        System.setProperty("java.util.logging.config.file", configPath);
-//    }
+
+    private static final Logger logger = Logger.getLogger(Start.class.getName());
+    static {
+        System.setProperty("java.util.logging.config.file", "./resources/sudoku/logging.properties");
+    }
 
 
     //=========================================================== Behaviour ==//
@@ -55,14 +56,7 @@ class Start
             throw new FileException(ioException);
         }
     }
-
     //================================================================ Data ==//
-    //------------------------------------------------------------ Logger --==//
-    private static final
-    Logger logger
-            = Logger.getLogger(Start.class.getName());
-
-
 }
 
 

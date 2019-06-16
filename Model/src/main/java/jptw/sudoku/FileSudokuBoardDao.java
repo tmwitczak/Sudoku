@@ -54,12 +54,12 @@ class FileSudokuBoardDao
                     = new ObjectInputStream(fileInputStream)) {
 
             sudokuBoard = (SudokuBoard) objectInputStream.readObject();
-            logger.log(Level.INFO,"Read from file: ".concat(filename));
+            logger.log(Level.INFO, "Read from file: ".concat(filename));
         } catch (IOException e) {
-            logger.log(Level.SEVERE,"Error initializing stream", e);
+            logger.log(Level.SEVERE, "Error initializing stream", e);
             throw new FileException(e);
         } catch (ClassNotFoundException e) {
-            logger.log(Level.SEVERE,"Class not found", e);
+            logger.log(Level.SEVERE, "Class not found", e);
             throw new FileException(e);
         }
 
@@ -77,9 +77,9 @@ class FileSudokuBoardDao
                     = new ObjectOutputStream(fileOutputStream)) {
 
             objectOutputStream.writeObject(obj);
-            logger.log(Level.INFO,"Wrote to file: ".concat(filename));
+            logger.log(Level.INFO, "Wrote to file: ".concat(filename));
         } catch (IOException e) {
-            logger.log(Level.SEVERE,"Error initializing stream", e);
+            logger.log(Level.SEVERE, "Error initializing stream", e);
             throw new FileException(e);
         }
     }

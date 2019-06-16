@@ -3,7 +3,7 @@ package jptw.sudoku;
 import java.sql.SQLException;
 
 public class DBException extends SQLException {
-    public DBException(Throwable cause) {
+    public DBException(final Throwable cause) {
         super(cause);
     }
 }
