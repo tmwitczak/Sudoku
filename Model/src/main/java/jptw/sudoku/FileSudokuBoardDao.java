@@ -4,6 +4,8 @@ package jptw.sudoku;
 
 ///////////////////////////////////////////////////////////////////// Imports //
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /////////////////////////////////////////////////// Class: FileSudokuBoardDao //
@@ -52,14 +54,13 @@ class FileSudokuBoardDao
                     = new ObjectInputStream(fileInputStream)) {
 
             sudokuBoard = (SudokuBoard) objectInputStream.readObject();
-
+            logger.log(Level.INFO,"Read from file: ".concat(filename));
         } catch (IOException e) {
-
+            logger.log(Level.SEVERE,"Error initializing stream", e);
             throw new FileException(e);
-
         } catch (ClassNotFoundException e) {
-
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE,"Class not found", e);
+            throw new FileException(e);
         }
 
         return sudokuBoard;
@@ -76,9 +77,9 @@ class FileSudokuBoardDao
                     = new ObjectOutputStream(fileOutputStream)) {
 
             objectOutputStream.writeObject(obj);
-
+            logger.log(Level.INFO,"Wrote to file: ".concat(filename));
         } catch (IOException e) {
-
+            logger.log(Level.SEVERE,"Error initializing stream", e);
             throw new FileException(e);
         }
     }
@@ -87,7 +88,7 @@ class FileSudokuBoardDao
     //================================================================ Data ==//
     private
     String filename;
-
+    private static final Logger logger = Logger.getLogger(FileSudokuBoardDao.class.getName());
 
 }
 

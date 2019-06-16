@@ -9,10 +9,10 @@ interface Dao<T>
 
     //=========================================================== Behaviour ==//
     T read()
-        throws FileException;
+        throws FileException, DBException;
     
     void write(T obj)
-        throws FileException;
+        throws FileException, DBException;
 
 
 }

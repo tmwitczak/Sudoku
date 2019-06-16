@@ -11,6 +11,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 ////////////////////////////////////////////////////////// Class: SudokuBoard //
@@ -18,6 +19,7 @@ public
 class SudokuBoard
     implements Cloneable,
                Serializable {
+
 
     //=========================================================== Behaviour ==//
     //-------------------------------------------------------------- Main --==//
