@@ -2,6 +2,7 @@
 package sudoku;
 
 ///////////////////////////////////////////////////////////////////// Imports //
+
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,24 +34,22 @@ class Board {
     private static final
     Logger logger
             = Logger.getLogger(Board.class
-                                    .getName());
+            .getName());
 
     //=========================================================== Behaviour ==//
     //-------------------------------------------------------------- FXML --==//
-    private
-    void localizeUserInterface
-            (final String lang)
+    private void localizeUserInterface(final String lang)
             throws IOException {
 
         InputStream inputStream
                 = getClass().getClassLoader()
-                            .getResourceAsStream("sudoku/Localization_"
-                                                 + lang
-                                                 + ".properties");
+                .getResourceAsStream("sudoku/Localization_"
+                        + lang
+                        + ".properties");
 
         InputStreamReader inputStreamReader
-            = new InputStreamReader(inputStream,
-                                    StandardCharsets.UTF_8);
+                = new InputStreamReader(inputStream,
+                StandardCharsets.UTF_8);
 
         resourceBundleMenu
                 = new PropertyResourceBundle(inputStreamReader);
@@ -72,9 +71,7 @@ class Board {
     }
 
     @FXML
-    private
-    void initialize
-            ()
+    private void initialize()
             throws IOException {
 
         backtrackingSudokuSolver.solve(sudokuBoard);
@@ -85,7 +82,7 @@ class Board {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(
                 "localization-language"))) {
             lang = reader.readLine();
-            logger.log(Level.INFO,"Language set up.");
+            logger.log(Level.INFO, "Language set up.");
         } catch (Exception exception) {
             lang = "pl";
             logger.log(Level.WARNING, "Language set to default.", exception);
@@ -210,18 +207,19 @@ class Board {
 
                 Pattern validNewText = Pattern.compile("[1-9 ]");
                 TextFormatter textFormatter
-                        = new TextFormatter<>(new CharacterStringConverter() {},
-                                              null,
-                                              change -> {
+                        = new TextFormatter<>(new CharacterStringConverter() {
+                },
+                        null,
+                        change -> {
 
-                    String newText = change.getControlNewText();
+                            String newText = change.getControlNewText();
 
-                    if (validNewText.matcher(newText).matches()) {
-                        return change;
-                    } else {
-                        return null;
-                    }
-                });
+                            if (validNewText.matcher(newText).matches()) {
+                                return change;
+                            } else {
+                                return null;
+                            }
+                        });
 
                 TextField textField = new TextField();
                 textFields[i][j] = textField;
@@ -234,10 +232,10 @@ class Board {
                     int value;
                     try {
                         value = (((TextField) event.getSource())
-                                            .getText()
-                                            .charAt(0) - '0');
+                                .getText()
+                                .charAt(0) - '0');
                         sudokuBoard.set(x, y, value);
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                         sudokuBoard.set(x, y, 0);
                     }
                     logger.log(Level.INFO, "Setting (" + x + ", " + y + ") "

@@ -3,7 +3,7 @@ package sudoku;
 import java.io.IOException;
 
 public class FileException extends IOException {
-    public FileException(Throwable cause) {
+    public FileException(final Throwable cause) {
         super(cause);
     }
 }
